@@ -9,9 +9,6 @@ import adminController.dao.ProductDAOImpl;
 import adminController.models.Product;
 import java.io.IOException;
 import javax.servlet.http.Part;
-import java.nio.file.Paths;
-import java.io.File;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -33,48 +30,54 @@ public class addProductServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/admin/add_product.jsp");
         dispatcher.include(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
+
+        // Retrieve form data
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        String priceStr = request.getParameter("price");
+        String qtyStr = request.getParameter("qty");
+
+        // Debug output to the console
+        System.out.println("Title: " + title + ", Description: " + description + ", Price: " + priceStr + ", Quantity: " + qtyStr);
+        String filename = "";
         try {
-            out.println("<html><body>");
-            out.println("<h1>Received Data</h1>");
+            double price = Double.parseDouble(priceStr);
+            int quantity = Integer.parseInt(qtyStr);
+            Product product = new Product(title, description, price, quantity);
 
-            // Handling text fields
-            String title = request.getParameter("title");
-            String description = request.getParameter("description");
-            String priceStr = request.getParameter("price");
-            String qtyStr = request.getParameter("qty");
-
-            out.println("<p>Title: " + title + "</p>");
-            out.println("<p>Description: " + description + "</p>");
-            out.println("<p>Price: " + priceStr + "</p>");
-            out.println("<p>Quantity: " + qtyStr + "</p>");
-
-            // Handling file upload
-            Part filePart = request.getPart("image"); // Retrieves the file part
-            if (filePart != null) {
-                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-                // You can save the file with the following line, adjust the path as necessary
-                // filePart.write("/path/to/uploads/" + fileName);
-
-                out.println("<p>Uploaded File Name: " + fileName + "</p>");
-                out.println("<p>Size: " + filePart.getSize() + "</p>");
-            }
             
-            out.println("</body></html>");
+
+            // Utilize the DAO to save the product
+            ProductDAO productDAO = new ProductDAOImpl();
+            int productId = productDAO.addProduct(product);
+
+            // Redirect to a success page or another relevant page
+            response.sendRedirect("/pages/admin/products.jsp");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Invalid input format for price or quantity: " + e.getMessage());
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace(out); // Print stack trace to output for debugging
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Database error: " + e.getMessage());
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 
-
-
+    private String getFileName(final Part part) {
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(
+                        content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
 }
-
 
 //    @Override
 //    protected void doPost(HttpServletRequest request, HttpServletResponse response)

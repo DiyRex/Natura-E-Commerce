@@ -7,9 +7,17 @@
         <servlet-name>addProductServlet</servlet-name>
         <servlet-class>adminController.addProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>imageUpload</servlet-name>
+        <servlet-class>adminController.imageUpload</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/addProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>imageUpload</servlet-name>
+        <url-pattern>/imageUpload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -26,7 +26,11 @@
 
         <div></div>
         <!-- Main content and other HTML elements go here -->
-
+        <form action="/imageUpload" method="post" enctype="multipart/form-data">
+            Select file to upload:
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+        </form>
         <!-- Bootstrap JS or other scripts can be included here -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
