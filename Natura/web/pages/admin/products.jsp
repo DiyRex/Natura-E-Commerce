@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="">
-            <a href="./add_product.html" class="btn btn-primary mb-4 mt-4"><i class="h6 bi bi-plus"></i> Add Product</a>
+            <a href="./add_product.jsp" class="btn btn-primary mb-4 mt-4"><i class="h6 bi bi-plus"></i> Add Product</a>
         </div>
         <table class="table table-hover">
             <thead>
