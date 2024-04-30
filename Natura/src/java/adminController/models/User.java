@@ -7,29 +7,35 @@ package adminController.models;
 public class User {
     private int id;
     private String name;
+    private String contact;
     private String apt_no;
     private String street;
     private String city;
+    private String state;
     private String zip_code;
     private String email;
     
-    public User(int id, String name, String apt_no, String street, String city, String zip_code, String email)
+    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email)
     {
        this.id = id;
        this.name = name;
+       this.contact = contact;
        this.apt_no = apt_no;
        this.street = street;
        this.city = city;
+       this.state = state;
        this.zip_code = zip_code;
        this.email = email;
     }
     
-    public User(String name, String apt_no, String street, String city, String zip_code, String email)
+    public User(String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email)
     {
        this.name = name;
+       this.contact = contact;
        this.apt_no = apt_no;
        this.street = street;
        this.city = city;
+       this.state = state;
        this.zip_code = zip_code;
        this.email = email;
     }
@@ -130,6 +136,34 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return the state
+     */
+    public String getState() {
+        return state;
+    }
+
+    /**
+     * @param state the state to set
+     */
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    /**
+     * @return the contact
+     */
+    public String getContact() {
+        return contact;
+    }
+
+    /**
+     * @param contact the contact to set
+     */
+    public void setContact(String contact) {
+        this.contact = contact;
     }
     
 }
