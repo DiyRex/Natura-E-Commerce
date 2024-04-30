@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
 import models.Product;
-import javax.servlet.annotation.WebServlet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;

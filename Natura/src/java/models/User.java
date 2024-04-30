@@ -14,6 +14,7 @@ public class User {
     private String state;
     private String zip_code;
     private String email;
+    private String password;
     
     public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email)
     {
@@ -28,7 +29,7 @@ public class User {
        this.email = email;
     }
     
-    public User(String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email)
+    public User(String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, String password)
     {
        this.name = name;
        this.contact = contact;
@@ -38,6 +39,7 @@ public class User {
        this.state = state;
        this.zip_code = zip_code;
        this.email = email;
+       this.password = password;
     }
 
     /**
@@ -165,5 +167,20 @@ public class User {
     public void setContact(String contact) {
         this.contact = contact;
     }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     
 }

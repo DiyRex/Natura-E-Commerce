@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addUser(User user) throws SQLException {
-        String sql = "INSERT INTO user (Name, Contact, Apt_No, Street, City, State, ZipCode, Email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (Name, Contact, Apt_No, Street, City, State, ZipCode, Email, Password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         try {
             conn = DBConnection.getConnection();
@@ -60,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
                 stmt.setString(6, user.getState());
                 stmt.setString(7, user.getZip_code());
                 stmt.setString(8, user.getEmail());
+                stmt.setString(9,user.getPassword());
                 stmt.executeUpdate();
             }
         } finally {
