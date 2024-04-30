@@ -1,0 +1,97 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Additional CSS for responsiveness and animations */
+@keyframes slideFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#text-content {
+    animation: slideFromLeft 1s ease-out forwards;
+}
+
+#image-content {
+    animation: slideFromRight 1s ease-out forwards;
+}
+
+/* Responsive image styling */
+#image-content img {
+    width: 100%; /* Full width of the column */
+    object-fit: cover; /* Maintain aspect ratio, cover the area */
+}
+
+/* Ensuring the button is always centered in smaller screens */
+@media (max-width: 768px) {
+    .btn-container {
+        align-items: center;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.btn-animate {
+    animation: fadeIn 2s ease-out forwards;
+    opacity: 0; /* Start with the button being invisible */
+}
+
+/* Ensure that the button only starts fading in after the text has slid into place, if desired */
+.btn-animate {
+    animation-delay: 1s; /* Delay the start of the animation */
+}
+
+#productCarousel .carousel-control-prev,
+#productCarousel .carousel-control-next {
+    width: 4%; /* Control width, adjust as needed */
+}
+
+#productCarousel .carousel-control-prev {
+    left: -10%; /* Positioning the left arrow outside the carousel */
+}
+
+#productCarousel .carousel-control-next {
+    right: -10%; /* Positioning the right arrow outside the carousel */
+}
+
+#productCarousel .carousel-control-prev-icon,
+#productCarousel .carousel-control-next-icon {
+    width: 50px; /* Adjust the size of the arrows */
+    height: 50px; /* Adjust the size of the arrows */
+    background-size: 100%, 100%; /* Ensure the icon fills the element */
+    background-image: none; /* Remove default background images */
+}
+
+/* Optional: Adjusting the height of the carousel to ensure controls align nicely */
+#productCarousel {
+    position: relative;
+    padding: 20px 0; /* Adds space for arrows outside the carousel content */
+}
+
+

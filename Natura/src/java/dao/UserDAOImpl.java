@@ -2,7 +2,6 @@ package dao;
 
 import models.User;
 import utility.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
