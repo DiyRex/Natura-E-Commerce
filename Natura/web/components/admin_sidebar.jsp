@@ -70,6 +70,13 @@
                             >Orders</a
                         >
                     </div>
+                     <div class="row px-4 py-1">
+                        <a
+                            href="./users.jsp"
+                            class="btn d-block btn-primary text-white"
+                            >Users</a
+                        >
+                    </div>
                     <a
                         href="#"
                         class="btn d-block btn-primary text-white fixed-bottom-button"
