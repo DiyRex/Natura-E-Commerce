@@ -1,6 +1,6 @@
-package adminController.dao;
+package dao;
 
-import adminController.models.Product;
+import models.Product;
 import utility.DBConnection;
 import java.sql.*;
 import java.util.ArrayList;

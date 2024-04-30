@@ -1,3 +1,4 @@
+<%@page import="models.User"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,12 +26,21 @@
         </div>
 
         <div></div>
-        <!-- Main content and other HTML elements go here -->
-        <form action="/imageUpload" method="post" enctype="multipart/form-data">
-            Select file to upload:
-            <input type="file" name="file">
-            <input type="submit" value="Upload">
-        </form>
+       <%
+    // Check if the session exists and retrieve the user object
+    User user = null;
+    if (session != null) {
+        user = (User) session.getAttribute("user");
+    }
+
+    String userName = "Guest"; // Default name if user is not logged in
+    if (user != null) {
+        userName = user.getName(); // Get the user's name from the user object
+    }
+%>
+
+<h1>Hello, <%= userName %>!</h1> <!-- Display the greeting with the user's name -->
+
         <!-- Bootstrap JS or other scripts can be included here -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

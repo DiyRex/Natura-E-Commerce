@@ -1,5 +1,5 @@
-package adminController.dao;
-import adminController.models.User;
+package dao;
+import models.User;
 import java.util.List;
 
 /**
@@ -12,4 +12,5 @@ public interface UserDAO {
     List<User> getAllUsers() throws Exception;
     void updateUser(User user) throws Exception;
     void deleteUser(int id) throws Exception;
+    User loginUser(String email, String password) throws Exception;
 }

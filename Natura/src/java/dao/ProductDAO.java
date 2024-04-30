@@ -1,5 +1,5 @@
-package adminController.dao;
-import adminController.models.Product;
+package dao;
+import models.Product;
 import java.util.List;
 
 public interface ProductDAO {

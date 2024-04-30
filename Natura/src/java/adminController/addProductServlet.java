@@ -1,8 +1,8 @@
 package adminController;
 
-import adminController.dao.ProductDAO;
-import adminController.dao.ProductDAOImpl;
-import adminController.models.Product;
+import dao.ProductDAO;
+import dao.ProductDAOImpl;
+import models.Product;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;

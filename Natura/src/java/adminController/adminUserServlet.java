@@ -1,8 +1,8 @@
 package adminController;
 
-import adminController.dao.UserDAO;
-import adminController.dao.UserDAOImpl;
-import adminController.models.User;
+import dao.UserDAO;
+import dao.UserDAOImpl;
+import models.User;
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.io.IOException;
 import java.io.PrintWriter;

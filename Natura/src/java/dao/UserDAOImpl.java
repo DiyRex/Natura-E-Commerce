@@ -1,6 +1,6 @@
-package adminController.dao;
+package dao;
 
-import adminController.models.User;
+import models.User;
 import utility.DBConnection;
 
 import java.sql.Connection;
@@ -134,5 +134,37 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             if (conn != null) conn.close();
         }
+    }
+
+    @Override
+    public User loginUser(String email, String password) throws Exception {
+        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+        Connection conn = null;
+        User user = null;
+        try {
+            conn = DBConnection.getConnection();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, email);
+                stmt.setString(2,password);
+                try (ResultSet resultSet = stmt.executeQuery()) {
+                    if (resultSet.next()) {
+                        user = new User(
+                            resultSet.getInt("User_ID"),
+                            resultSet.getString("Name"),
+                            resultSet.getString("Contact"),
+                            resultSet.getString("Apt_No"),
+                            resultSet.getString("Street"),
+                            resultSet.getString("City"),
+                            resultSet.getString("State"),
+                            resultSet.getString("ZipCode"),
+                            resultSet.getString("Email")
+                        );
+                    }
+                }
+            }
+        } finally {
+            if (conn != null) conn.close();
+        }
+        return user;
     }
 }

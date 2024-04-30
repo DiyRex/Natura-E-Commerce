@@ -1,4 +1,4 @@
-package adminController.models;
+package models;
 
 /**
  *
