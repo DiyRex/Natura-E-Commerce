@@ -78,7 +78,7 @@
                         >
                     </div>
                     <a
-                        href="#"
+                        href="/logout"
                         class="btn d-block btn-primary text-white fixed-bottom-button"
                         >Logout</a
                     >

@@ -21,11 +21,11 @@
                 </li>
             </ul>
             <div>
-                <a class="btn btn-light btn-sm my-2 py-1 px-2 d-inline d-lg-none" href="#" style="color: #000;">Login/Sign Up</a>
+                <a class="btn btn-light btn-sm my-2 py-1 px-2 d-inline d-lg-none" href="/login" style="color: #000;">Login/Sign Up</a>
             </div> 
         </div>
         <div>
-            <a class="btn btn-sm btn-light rounded-pill py-2 px-3 d-none d-lg-block" href="#" style="color: #000;">Login/Sign Up</a>
+            <a class="btn btn-sm btn-light rounded-pill py-2 px-3 d-none d-lg-block" href="/login" style="color: #000;">Login/Sign Up</a>
         </div> 
     </div>
 </nav>

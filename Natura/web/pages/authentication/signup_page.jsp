@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup Page</title>
+    <title>Natura Signup</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         html, body {
@@ -42,7 +42,7 @@
 <body>
     <div class="signup-form">
         <form action="/signup" method="post">
-            <h1 class="h3 mb-3 fw-normal text-center">Please Sign Up</h1>
+            <h1 class="h3 mb-3 fw-normal text-center">Sign Up</h1>
             <div class="mb-3">
                 <label for="inputName" class="form-label">Name</label>
                 <input type="text" id="inputName" name="name" class="form-control" placeholder="Full Name" required autofocus>
@@ -87,6 +87,9 @@
             </div>
             <button type="submit" class="btn btn-primary w-100">Sign Up</button>
         </form>
+        <div class="mt-3 text-center">
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
