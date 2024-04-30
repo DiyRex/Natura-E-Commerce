@@ -46,7 +46,7 @@
             </div>
             <div class="mb-3">
                 <label for="productImage" class="form-label">Product Image</label>
-                <input class="form-control" name="image" type="file" id="productImage">
+                <input class="form-control" name="file" type="file" id="productImage">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <!-- Cancel Button -->

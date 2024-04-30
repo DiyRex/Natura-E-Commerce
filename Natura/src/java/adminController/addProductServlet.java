@@ -1,20 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package adminController;
 
 import adminController.dao.ProductDAO;
 import adminController.dao.ProductDAOImpl;
 import adminController.models.Product;
+import java.io.File;
 import java.io.IOException;
-import javax.servlet.http.Part;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -22,7 +25,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 @MultipartConfig
 public class addProductServlet extends HttpServlet {
+    
+    private String uploadDirectory;
 
+    @Override
+    public void init() throws ServletException {
+        uploadDirectory = getServletContext().getInitParameter("UPLOAD_DIRECTORY");
+        if (uploadDirectory == null) {
+            throw new ServletException("Upload directory not set in web.xml.");
+        }
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,100 +48,73 @@ public class addProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        // Retrieve form data
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String priceStr = request.getParameter("price");
-        String qtyStr = request.getParameter("qty");
+        if (ServletFileUpload.isMultipartContent(request)) {
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            ServletFileUpload upload = new ServletFileUpload(factory);
+            String title = null, description = null, filePath = null;
+            double price = 0;
+            int quantity = 0;
 
-        // Debug output to the console
-        System.out.println("Title: " + title + ", Description: " + description + ", Price: " + priceStr + ", Quantity: " + qtyStr);
-        String filename = "";
-        try {
-            double price = Double.parseDouble(priceStr);
-            int quantity = Integer.parseInt(qtyStr);
-            Product product = new Product(title, description, price, quantity);
+            try {
+                List<FileItem> formItems = upload.parseRequest(request);
 
-            
+                for (FileItem item : formItems) {
+                    if (item.isFormField()) {
+                        String fieldName = item.getFieldName();
+                        String fieldValue = item.getString();
 
-            // Utilize the DAO to save the product
-            ProductDAO productDAO = new ProductDAOImpl();
-            int productId = productDAO.addProduct(product);
+                        switch (fieldName) {
+                            case "title":
+                                title = fieldValue;
+                                break;
+                            case "description":
+                                description = fieldValue;
+                                break;
+                            case "price":
+                                price = Double.parseDouble(fieldValue);
+                                break;
+                            case "qty":
+                                quantity = Integer.parseInt(fieldValue);
+                                break;
+                        }
+                    } else {
+                        String fieldName = item.getFieldName();
+                        String fileName = FilenameUtils.getName(item.getName());
 
-            // Redirect to a success page or another relevant page
-            response.sendRedirect("/pages/admin/products.jsp");
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "Invalid input format for price or quantity: " + e.getMessage());
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "Database error: " + e.getMessage());
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-    }
+                        if ("file".equals(fieldName) && fileName != null && !fileName.isEmpty()) {
+                            String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                            String modifiedFileName = timeStamp + "_" + fileName;
+                            File uploadDir = new File(uploadDirectory);
+                            if (!uploadDir.exists()) {
+                                uploadDir.mkdirs();
+                            }
+                            File storeFile = new File(uploadDir, modifiedFileName);
+                            item.write(storeFile);
+                            filePath = storeFile.getName();
+                            System.out.println("File uploaded successfully. File path: " + filePath);
+                        }
+                    }
+                }
 
-    private String getFileName(final Part part) {
-        for (String content : part.getHeader("content-disposition").split(";")) {
-            if (content.trim().startsWith("filename")) {
-                return content.substring(
-                        content.indexOf('=') + 1).trim().replace("\"", "");
+                if (title != null && filePath != null) {
+                    Product product = new Product(title, description, price, quantity);
+                    ProductDAO productDAO = new ProductDAOImpl();
+                    productDAO.addProduct(product, filePath);
+                    System.out.println("Product and image added successfully.");
+                } else {
+                    System.out.println("Required fields are missing.");
+                }
+            } catch (Exception ex) {
+                System.err.println("Error in processing upload: " + ex.getMessage());
+                request.setAttribute("errorMessage", "Error in processing upload: " + ex.getMessage());
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+                return;
             }
+        } else {
+            request.setAttribute("message", "Request Content-Type is not multipart/form-data.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        return null;
+        response.sendRedirect("/pages/admin/products.jsp");
     }
+
 }
-
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        request.setCharacterEncoding("UTF-8"); // Handle possible character encoding issues
-//
-//        // Fetch product details from the request
-//        String title = request.getParameter("title");
-//        String description = request.getParameter("description");
-//        double price = 0;
-//        int quantity = 0;
-//
-//        try {
-//            price = Double.parseDouble(request.getParameter("price"));
-//            quantity = Integer.parseInt(request.getParameter("qty"));
-//        } catch (NumberFormatException e) {
-//            // Log error or handle format exception
-//            e.printStackTrace();
-//            request.setAttribute("errorMessage", "Invalid input format for price or quantity.");
-//            request.getRequestDispatcher("error.jsp").forward(request, response);
-//            return;
-//        }
-//
-//        // Create a Product object from the fetched data
-//        Product product = new Product(title, description, price, quantity);
-//
-//        // Handle file upload
-//        Part filePart = request.getPart("image"); // Retrieves <input type="file" name="image">
-//        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-//        // Create a unique file name
-//        String newFileName = System.currentTimeMillis() + "_" + fileName;
-//        String filePath = "images/products/" + newFileName;
-//
-//        // Saves the file to the filesystem
-//        filePart.write(getServletContext().getRealPath("/") + filePath);
-//
-//        // Utilize the DAO to save the product
-//        ProductDAO productDAO = new ProductDAOImpl();
-//        try {
-//            // Insert product and retrieve generated product ID
-//            int productId = productDAO.addProduct(product);
-//
-//            // Insert image record in the database
-//            productDAO.addProductImage(productId, filePath);
-//
-//            // Redirect to a success page or another relevant page
-//            response.sendRedirect("/pages/admin/products.jsp");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            request.setAttribute("errorMessage", "Database error: " + e.getMessage());
-//            request.getRequestDispatcher("error.jsp").forward(request, response);
-//        }
-//    }
-

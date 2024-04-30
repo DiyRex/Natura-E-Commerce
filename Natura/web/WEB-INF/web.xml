@@ -24,6 +24,10 @@
             30
         </session-timeout>
     </session-config>
+     <context-param>
+        <param-name>UPLOAD_DIRECTORY</param-name>
+        <param-value>F:\\Projects\\JavaEE\\DEA\\E-Commerce-Project\\Natura\\shared\\images</param-value>
+    </context-param>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>

@@ -7,10 +7,9 @@ import adminController.models.Product;
 import java.util.List;
 
 public interface ProductDAO {
-    int addProduct(Product product) throws Exception;
     Product getProduct(int id) throws Exception;
     List<Product> getAllProducts() throws Exception;
     void updateProduct(Product product) throws Exception;
     void deleteProduct(int id) throws Exception;
-    void addProductImage(int productId, String imagePath) throws Exception;
+    void addProduct(Product product, String imagePath) throws Exception;
 }
