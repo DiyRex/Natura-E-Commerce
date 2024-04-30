@@ -30,22 +30,33 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getAllProducts() throws SQLException {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM product";
-        try (Connection conn = DBConnection.getConnection(); Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                products.add(new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("title"),
-                        resultSet.getString("description"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("quantity")
-                ));
+public List<Product> getAllProducts() throws SQLException {
+    List<Product> products = new ArrayList<>();
+    String sql = "SELECT * FROM product";
+    Connection conn = null;
+    try {
+        conn = DBConnection.getConnection();
+        if (conn == null || conn.isClosed()) {
+            System.err.println("Connection is closed or null");
+        } else {
+            try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    products.add(new Product(
+                        resultSet.getInt("Product_ID"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Description"),
+                        resultSet.getDouble("Price"),
+                        resultSet.getInt("Qty")
+                    ));
+                }
             }
         }
-        return products;
+    } finally {
+        if (conn != null) conn.close();
     }
+    return products;
+}
+
 
     @Override
     public void updateProduct(Product product) throws SQLException {

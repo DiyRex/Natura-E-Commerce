@@ -11,20 +11,36 @@
         <servlet-name>imageUpload</servlet-name>
         <servlet-class>adminController.imageUpload</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminProductServlet</servlet-name>
+        <servlet-class>adminController.adminProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminHomeServlet</servlet-name>
+        <servlet-class>adminController.adminHomeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
-        <url-pattern>/addProduct</url-pattern>
+        <url-pattern>/admin/product/addProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>imageUpload</servlet-name>
         <url-pattern>/imageUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminProductServlet</servlet-name>
+        <url-pattern>/admin/products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminHomeServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-     <context-param>
+    <context-param>
         <param-name>UPLOAD_DIRECTORY</param-name>
         <param-value>F:\\Projects\\JavaEE\\DEA\\E-Commerce-Project\\Natura\\shared\\images</param-value>
     </context-param>
