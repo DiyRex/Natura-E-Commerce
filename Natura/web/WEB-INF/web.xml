@@ -19,6 +19,14 @@
         <servlet-name>adminHomeServlet</servlet-name>
         <servlet-class>adminController.adminHomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminOrderServlet</servlet-name>
+        <servlet-class>adminController.adminOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminUserServlet</servlet-name>
+        <servlet-class>adminController.adminUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -34,6 +42,14 @@
     <servlet-mapping>
         <servlet-name>adminHomeServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminOrderServlet</servlet-name>
+        <url-pattern>/admin/orders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminUserServlet</servlet-name>
+        <url-pattern>/admin/users</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

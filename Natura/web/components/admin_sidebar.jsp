@@ -51,7 +51,7 @@
                 <div class="offcanvas-body position-relative">
                     <div class="row px-4 py-1">
                         <a
-                            href="./index.jsp"
+                            href="/admin"
                             class="btn d-block btn-primary text-white"
                             >Home</a
                         >
@@ -65,14 +65,14 @@
                     </div>
                     <div class="row px-4 py-1">
                         <a
-                            href="./orders.jsp"
+                            href="/admin/orders"
                             class="btn d-block btn-primary text-white"
                             >Orders</a
                         >
                     </div>
                      <div class="row px-4 py-1">
                         <a
-                            href="./users.jsp"
+                            href="/admin/users"
                             class="btn d-block btn-primary text-white"
                             >Users</a
                         >
