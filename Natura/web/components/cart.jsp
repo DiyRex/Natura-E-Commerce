@@ -134,23 +134,22 @@
                 <div class="cart-items">
                     <% if (cartItems != null && !cartItems.isEmpty()) {
                             for (Cart item : cartItems) {%>
+                    <input type="hidden" id="hiddenCartId" value="<%= item.getCart_id()%>">
                     <div class="list-group-item d-flex justify-content-between align-items-center cart-item">
                         <div class="item-details w-100">
                             <span class="product-name font-weight-bold"><%= item.getProduct()%></span> - 
                             <span class="product-price">LKR <%= item.getPrice()%></span>
                         </div>
                         <div class="input-group ml-5"> <!-- ml-auto to push to the right -->
-                            <button class="btn btn-outline-secondary btn-decrement" type="button" data-product-id="<%= item.getCart_id()%>">
+                            <button class="btn btn-outline-secondary btn-decrement" type="button" data-cart-id="<%= item.getCart_id()%>" data-product-id="<%= item.getProduct_id()%>">
                                 <i class="bi bi-dash-circle"></i>
                             </button>
                             <input type="text" class="form-control product-count text-center" value="<%= item.getQty()%>" data-price="<%= item.getPrice()%>" readonly style="max-width: 60px;">
-                            <button class="btn btn-outline-secondary btn-increment" type="button" data-product-id="<%= item.getCart_id()%>">
+                            <button class="btn btn-outline-secondary btn-increment" type="button" data-cart-id="<%= item.getCart_id()%>" data-product-id="<%= item.getProduct_id()%>">
                                 <i class="bi bi-plus-circle"></i>
                             </button>
                         </div>
                     </div>
-
-
                     <% }
                     } else { %>
                     <p>Your cart is empty.</p>
@@ -182,29 +181,59 @@
                         const price = parseFloat(productCountInput.getAttribute('data-price'));
                         const count = parseInt(productCountInput.value);
                         totalCost += price * count;
-                        console.log(totalCost);
                     });
                     document.getElementById('totalCost').textContent = 'LKR ' + totalCost.toFixed(2);
                 }
 
+                function updateCart(productId, quantityChange, cartId) {
+    console.log("Updating cart with:", productId, quantityChange, cartId);
+    console.log("/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange);
+    // Construct the URL using template literals directly in the fetch call
+    const url = "/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange;
+    console.log("Request URL:", url);
+
+    // Using Fetch API to make a GET request
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response:', data);
+        })
+        .catch(error => {
+            console.error('Failed to update cart:', error);
+        });
+}
+
+
+
                 document.querySelectorAll('.btn-increment').forEach(function (button) {
                     button.addEventListener('click', function () {
                         const input = button.parentElement.querySelector('.product-count');
+                        const productId = button.getAttribute('data-product-id');
+                        const cartId = button.getAttribute('data-cart-id');
                         let count = parseInt(input.value);
                         count++;
                         input.value = count;
                         updateTotalCost();
+                        updateCart(productId, 1, cartId);  // Call updateCart function with +1
                     });
                 });
 
                 document.querySelectorAll('.btn-decrement').forEach(function (button) {
                     button.addEventListener('click', function () {
                         const input = button.parentElement.querySelector('.product-count');
+                        const productId = button.getAttribute('data-product-id');
+                        const cartId = button.getAttribute('data-cart-id');
                         let count = parseInt(input.value);
                         if (count > 1) {
                             count--;
                             input.value = count;
                             updateTotalCost();
+                            updateCart(productId, -1, cartId);  // Call updateCart function with -1
                         }
                     });
                 });
@@ -212,5 +241,6 @@
                 updateTotalCost(); // Update total cost on page load
             });
         </script>
+
     </body>
 </html>

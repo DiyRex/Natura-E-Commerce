@@ -25,10 +25,14 @@ public class cartUpdateServlet extends HttpServlet {
        String userId = request.getParameter("userId");
         int productId = Integer.parseInt(request.getParameter("productId"));
         int quantityChange = Integer.parseInt(request.getParameter("quantityChange"));
-
+        int cartId = Integer.parseInt(request.getParameter("cartId"));
+        System.out.println(productId);
+        System.out.println(quantityChange);
+        System.out.println(cartId);
+        System.out.println(userId);
         CartDAOImpl cartDao = new CartDAOImpl();
         try {
-            cartDao.addOrUpdate(userId, productId, quantityChange);
+            cartDao.addOrUpdate(productId, cartId, quantityChange);
             response.setContentType("application/json");
             response.getWriter().write("{\"status\":\"success\"}");
         } catch (SQLException e) {
