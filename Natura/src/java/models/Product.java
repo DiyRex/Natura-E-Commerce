@@ -5,20 +5,7 @@ package models;
  * @author Devin
  */
 public class Product {
-
-    /**
-     * @return the image
-     */
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * @param image the image to set
-     */
-    public void setImage(String image) {
-        this.image = image;
-    }
+    
    private int id;
     private String title;
     private String description;
@@ -117,5 +104,18 @@ public class Product {
      */
     public void setQty(int qty) {
         this.qty = qty;
+    }
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
     }
 }

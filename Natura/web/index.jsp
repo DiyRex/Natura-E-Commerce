@@ -27,6 +27,7 @@
         <%
             // Initialize the username as "Guest" by default
             String userName = "Guest";
+            String userID = null;
 
             // Retrieve the user object from the session if it exists
             User user = (session != null) ? (User) session.getAttribute("user") : null;
@@ -34,14 +35,16 @@
             // If a user object was found, update the userName with the user's name
             if (user != null) {
                 userName = user.getName();
+                userID = String.valueOf(user.getId());
             }
             session.setAttribute("userName", userName);
+            session.setAttribute("userID", userID);
         %>
 
 
         <%@ include file="./components/navbar.jsp" %>
 
-        
+
         <div class="container-fluid pt-5">
             <section>
 
@@ -59,7 +62,7 @@
                             Try Some Natural <span class="text-success">Foods</span>
                         </h1>
                         <div class="d-flex flex-column btn-container">
-                           
+
                             <button
                                 class="btn btn-lg rounded-pill btn-success p-2 px-4 mt-5 btn-animate"
                                 >
@@ -78,9 +81,9 @@
                             />
                     </div>
                 </div>
-                            <div class="z">
-            <%@ include file="./components/cart.jsp" %>
-        </div>
+                <div class="z">
+                    <%@ include file="./components/cart.jsp" %>
+                </div>
             </section>
         </div>
         <section class="container mt-5 mb-5 pb-5 pt-5">

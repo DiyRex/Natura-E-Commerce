@@ -23,6 +23,7 @@
             position: relative;
             left: 0;
         }
+        
     </style>
 </head>
 <!-- Navbar -->
