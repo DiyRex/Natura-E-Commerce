@@ -123,3 +123,15 @@
     padding: 20px 0; /* Adds space for arrows outside the carousel content */
 }
 
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.cart-items {
+    flex-grow: 1;
+    overflow-:auto;
+}
+.total-cost {
+    flex-shrink: 0;
+}

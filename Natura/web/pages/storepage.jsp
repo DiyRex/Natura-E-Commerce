@@ -28,7 +28,7 @@
         </style>
     </head>
     <body>
-        <%@ include file="../components/nav.jsp" %>
+        <%@ include file="../components/navbar.jsp" %>
         <div class="container-md mt-5">
             <br>
             <br>

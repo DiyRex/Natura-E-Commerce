@@ -46,7 +46,7 @@
     </style>
 </head>
 <body>
-    <%@ include file="../../components/nav.jsp" %>
+    <%@ include file="../../components/navbar.jsp" %>
     <div class="login-form">
     <form action="/login" method="post">
         <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
