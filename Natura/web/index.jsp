@@ -21,6 +21,7 @@
   </head>
   <body>
     <div class="container-fluid">
+        <%@ include file="./components/nav.jsp" %>
       <section>
         <div class="row bg-dark">
           <div
