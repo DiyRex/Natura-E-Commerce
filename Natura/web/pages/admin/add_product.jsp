@@ -27,7 +27,7 @@
             <div class="col-3"> <!-- Empty column for balance -->
             </div>
         </div>
-        <form action="/addProduct" method="POST" enctype="multipart/form-data">
+        <form action="/admin/product/addProduct" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="productTitle" class="form-label">Product Title</label>
                 <input type="text" class="form-control" name="title" id="productTitle" placeholder="Enter product title">

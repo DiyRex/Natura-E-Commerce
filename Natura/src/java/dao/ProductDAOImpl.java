@@ -77,7 +77,7 @@ public class ProductDAOImpl implements ProductDAO {
                 try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
                     while (resultSet.next()) {
                         String imagePath = resultSet.getString("Image_Path");
-                        System.out.println(imagePath);
+                       
 //                        if (imagePath != null && !imagePath.isEmpty()) {
 //                            imagePath = uploadDir + "\\" + imagePath;  // Append the upload directory to the image path
 //                            System.out.println(uploadDir);
@@ -124,83 +124,75 @@ public class ProductDAOImpl implements ProductDAO {
         }
     }
 
-    @Override
-    public void addProduct(Product product, String imagePath) throws SQLException {
-        Connection conn = null;
-        PreparedStatement productStatement = null;
-        PreparedStatement imageStatement = null;
-        ResultSet generatedKeys = null;
+@Override
+public void addProduct(Product product, String imagePath) throws SQLException {
+    Connection conn = null;
+    PreparedStatement productStmt = null;
+    PreparedStatement imageStmt = null;
+    ResultSet rs = null;
 
-        String productSql = "INSERT INTO product (Title, Description, Price, Qty) VALUES (?, ?, ?, ?)";
-        String imageSql = "INSERT INTO image (Product_ID, Image_Path) VALUES (?, ?)";
+    String productSql = "INSERT INTO product (Title, Description, Price, Qty) VALUES (?, ?, ?, ?)";
+    String imageSql = "INSERT INTO image (Product_ID, Image_Path) VALUES (?, ?)";
 
-        try {
-            // Start transaction
-            conn = DBConnection.getConnection();
-            conn.setAutoCommit(false);  // Turn off auto-commit
+    try {
+        conn = DBConnection.getConnection();
+        conn.setAutoCommit(false); // Start transaction
 
-            // Insert product
-            productStatement = conn.prepareStatement(productSql, Statement.RETURN_GENERATED_KEYS);
-            productStatement.setString(1, product.getTitle());
-            productStatement.setString(2, product.getDescription());
-            productStatement.setDouble(3, product.getPrice());
-            productStatement.setInt(4, product.getQty());
-            int affectedRows = productStatement.executeUpdate();
+        // Insert product
+        productStmt = conn.prepareStatement(productSql, Statement.RETURN_GENERATED_KEYS);
+        productStmt.setString(1, product.getTitle());
+        productStmt.setString(2, product.getDescription());
+        productStmt.setDouble(3, product.getPrice());
+        productStmt.setInt(4, product.getQty());
+        int affectedRows = productStmt.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException("Creating product failed, no rows affected.");
+        if (affectedRows == 0) {
+            throw new SQLException("Creating product failed, no rows affected.");
+        }
+
+        // Retrieve product ID from inserted product
+        rs = productStmt.getGeneratedKeys();
+        if (rs.next()) {
+            long productId = rs.getLong(1);
+
+            // Insert image with the new product ID
+            imageStmt = conn.prepareStatement(imageSql);
+            imageStmt.setLong(1, productId);
+            imageStmt.setString(2, imagePath);
+            imageStmt.executeUpdate();
+        } else {
+            throw new SQLException("Creating product failed, no ID obtained.");
+        }
+
+        conn.commit(); // Commit transaction
+    } catch (SQLException ex) {
+        if (conn != null) {
+            try {
+                conn.rollback(); // Rollback transaction on error
+            } catch (SQLException e) {
+                throw new SQLException("Rollback failed.", e);
             }
-
-            // Retrieve the generated product ID
-            generatedKeys = productStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int productId = generatedKeys.getInt(1);
-
-                // Insert image with the newly created product ID
-                imageStatement = conn.prepareStatement(imageSql);
-                imageStatement.setInt(1, productId);
-                imageStatement.setString(2, imagePath);
-                int imageRows = imageStatement.executeUpdate();
-                if (imageRows == 0) {
-                    throw new SQLException("Creating product image failed, no rows affected.");
-                }
-                System.out.println("Image was inserted successfully!");
-            } else {
-                throw new SQLException("Creating product failed, no ID obtained.");
-            }
-
-            // Commit transaction
-            conn.commit();
-        } catch (SQLException e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();  // Roll back transaction on error
-                } catch (SQLException ex) {
-                    System.err.println("Rollback failed: " + ex.getMessage());
-                }
-            }
-            System.err.println("SQL Error: " + e.getMessage());
-            throw e;  // Propagate the exception
-        } finally {
-            // Clean up resources
-            if (generatedKeys != null) try {
-                generatedKeys.close();
-            } catch (SQLException e) {
-                /* ignored */ }
-            if (productStatement != null) try {
-                productStatement.close();
-            } catch (SQLException e) {
-                /* ignored */ }
-            if (imageStatement != null) try {
-                imageStatement.close();
-            } catch (SQLException e) {
-                /* ignored */ }
-            if (conn != null) try {
-                conn.setAutoCommit(true);
-                conn.close();
-            } catch (SQLException e) {
-                /* ignored */ }
+        }
+        throw ex;
+    } finally {
+        // Close all resources
+        if (rs != null) {
+            rs.close();
+        }
+        if (productStmt != null) {
+            productStmt.close();
+        }
+        if (imageStmt != null) {
+            imageStmt.close();
+        }
+        if (conn != null) {
+            conn.close();
         }
     }
+}
+
+
+
+
 
 }
