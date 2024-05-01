@@ -94,4 +94,32 @@
     padding: 20px 0; /* Adds space for arrows outside the carousel content */
 }
 
+/* Carousel2 */
+
+#productCarouselBest .carousel-control-prev,
+#productCarousel .carousel-control-next {
+    width: 4%; /* Control width, adjust as needed */
+}
+
+#productCarouselBest .carousel-control-prev {
+    left: -5%; /* Positioning the left arrow outside the carousel */
+}
+
+#productCarouselBest .carousel-control-next {
+    right: -10%; /* Positioning the right arrow outside the carousel */
+}
+
+#productCarouselBest .carousel-control-prev-icon,
+#productCarouselBest .carousel-control-next-icon {
+    width: 50px; /* Adjust the size of the arrows */
+    height: 50px; /* Adjust the size of the arrows */
+    background-size: 100%, 100%; /* Ensure the icon fills the element */
+    background-image: none; /* Remove default background images */
+}
+
+/* Optional: Adjusting the height of the carousel to ensure controls align nicely */
+#productCarouselBest {
+    position: relative;
+    padding: 20px 0; /* Adds space for arrows outside the carousel content */
+}
 

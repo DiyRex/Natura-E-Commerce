@@ -20,6 +20,7 @@ public class clientLogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("user", null);
+        session.setAttribute("userName","Guest");
         request.getRequestDispatcher("/login").forward(request, response);
     }
 }

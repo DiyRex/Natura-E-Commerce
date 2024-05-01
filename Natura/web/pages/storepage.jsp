@@ -29,8 +29,12 @@
     </head>
     <body>
         <%@ include file="../components/nav.jsp" %>
-        <div class="container-md">
-            <h1 class="text-center h2 fw-bold mt-5">Product Store</h1>
+        <div class="container-md mt-5">
+            <br>
+            <br>
+            <div class="mt-4">
+                <h1 class="text-center h2 fw-bold mt-5">Products Store</h1>
+            </div>
             <div class="row mt-5">
                 <!-- Start Card -->
                 <%-- Retrieve the product list from request scope --%>
@@ -63,6 +67,10 @@
 
                 <!-- end Card -->
             </div>
+        </div>
+         <div class="mt-5">
+            <%@ include file="../components/footer.jsp" %>
+        </div>
             <!-- Script -->
             <script>
                 var heart = document.querySelectorAll(".heart-icon");

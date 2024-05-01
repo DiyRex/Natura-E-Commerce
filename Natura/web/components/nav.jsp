@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <style>
         .navbar-dark .nav-item .nav-link {
             color: #fff;
@@ -85,8 +86,33 @@
                     </a>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarProfileDropdown">
-                        <!-- Profile links -->
+                        <!-- Profile Name -->
+
+
+                        <li><a class="dropdown-item" href="#"><%= session.getAttribute("userName") != null ? (String) session.getAttribute("userName") : "Guest"%></a></li>
+
+                        <!-- Divider (optional) -->
+                        <li><hr class="dropdown-divider"></li>
+
+                        <%
+                            // Safely retrieve the userName attribute from the session
+                            String username = (String) session.getAttribute("userName");
+
+                            // Check if userName is "Guest" or null, show Login; otherwise, show Logout
+                            if (username == null || username.equals("Guest")) {
+                        %>
+                        <li><a class="dropdown-item" href="/login">Login</a></li>
+                            <%
+                            } else {
+                            %>
+                        <!-- If the user is not "Guest" and hence logged in, show Logout -->
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            <%
+                                }
+                            %>
+
                     </ul>
+
                 </li>
             </ul>
         </div>

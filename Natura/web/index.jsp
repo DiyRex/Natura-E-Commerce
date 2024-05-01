@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="models.Product"%>
 <%@page import="dao.ProductDAOImpl"%>
+<%@page import="models.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,16 +18,35 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
             />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <link rel="stylesheet" href="./css/home.css" />
         <title>Natura</title>
     </head>
     <body>
-        <div class="container-fluid">
-            <%@ include file="./components/nav.jsp" %>
+        <%
+            // Initialize the username as "Guest" by default
+            String userName = "Guest";
+
+            // Retrieve the user object from the session if it exists
+            User user = (session != null) ? (User) session.getAttribute("user") : null;
+
+            // If a user object was found, update the userName with the user's name
+            if (user != null) {
+                userName = user.getName();
+            }
+            session.setAttribute("userName", userName);
+        %>
+
+
+        <%@ include file="./components/nav.jsp" %>
+        <div class="container-fluid pt-5">
             <section>
                 <div class="row bg-dark">
+                    <div class="mt-5 d-block d-md-none" style="padding-top:100px;">
+
+                    </div>
+
                     <div
                         class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center"
                         id="text-content"
@@ -78,7 +98,82 @@
                             <% for (int j = i; j < i + 4 && j < products.size(); j++) {
                                     Product product = products.get(j);
                             %>
-                            <div class="col-6 col-md-3 d-flex justify-content-center align-items-center" style="height: 100%;">
+                            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" style="height: 100%;">
+                                <div class="card shadow" style="width: 18rem; height: 25rem; transform: scale(0.8); transform-origin: center;">
+                                    <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height: 50%; width: 100%; object-fit: cover;" alt="<%= product.getTitle()%> Image" />
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title fw-bold text-center h3"><%= product.getTitle()%></h5>
+                                        <p class="card-text text-center"><small>(100g)</small></p>
+                                        <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice()%></h6>
+                                        <div class="d-flex justify-content-evenly mt-4">
+                                            <a href="#" class="btn shadow-lg border">
+                                                <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
+                                            </a>
+                                            <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
+                                            <a href="#" class="btn shadow-lg border">
+                                                <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% } %>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+                <!-- Carousel controls -->
+                <button
+                    class="carousel-control-prev mr-5"
+                    type="button"
+                    data-bs-target="#productCarouselBestDeals"
+                    data-bs-slide="prev"
+                    >
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    <i class="text-dark h2 bi bi-arrow-left-circle"></i>
+                </button>
+                <button
+                    class="carousel-control-next mx-5"
+                    type="button"
+                    data-bs-target="#productCarouselBestDeals"
+                    data-bs-slide="next"
+                    >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    <i class="text-dark h2 bi bi-arrow-right-circle"></i>
+                </button>
+            </div>
+
+        </section>
+        <section class="container-fluid bg-dark pt-5 mt-5 mb-5 pb-5" >
+            <div class="container mt-5">
+                <div
+                    class="row text-center hot-selling-title"
+                    data-aos="fade-up"
+                    data-aos-duration="2000"
+                    data-aos-once="true"
+                    >
+                    <h2 class="text-white"><i class="text-white bi bi-bag"></i> Best Selling</h2>
+                </div>
+
+                <div id="productCarouselBest" class="carousel slide mt-5" data-bs-ride="carousel">
+                <div class="carousel-inner" data-aos="fade-up" data-aos-delay="150" data-aos-duration="2000" data-aos-easing="ease-in-out" data-aos-once="true">
+                    <%
+                        ProductDAOImpl bestdao = new ProductDAOImpl();
+                        List<Product> Bestproducts = bestdao.getBestDeals();
+                        for (int i = 0; i < Bestproducts.size(); i += 4) {
+                            boolean isActive = i == 0;
+                    %>
+                    <div class="carousel-item <%= isActive ? "active" : ""%>">
+                        <div class="row d-flex justify-content-center">
+                            <% for (int j = i; j < i + 4 && j < products.size(); j++) {
+                                    Product product = products.get(j);
+                            %>
+                            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" style="height: 100%;">
                                 <div class="card shadow" style="width: 18rem; height: 25rem; transform: scale(0.8); transform-origin: center;">
                                     <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height: 50%; width: 100%; object-fit: cover;" alt="<%= product.getTitle()%> Image" />
                                     <div class="card-body text-center">
@@ -114,7 +209,7 @@
                     >
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
-                    <i class="text-dark h2 bi bi-arrow-left-circle"></i>
+                    <i class="text-light h2 bi bi-arrow-left-circle"></i>
                 </button>
                 <button
                     class="carousel-control-next mx-5"
@@ -124,138 +219,11 @@
                     >
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
-                    <i class="text-dark h2 bi bi-arrow-right-circle"></i>
+                    <i class="text-light h2 bi bi-arrow-right-circle"></i>
                 </button>
             </div>
-
         </section>
-        <section class="container-fluid bg-dark pt-5 mt-5 mb-5 pb-5" >
-            <div class="container mt-5">
-                <div
-                    class="row text-center hot-selling-title"
-                    data-aos="fade-up"
-                    data-aos-duration="2000"
-                    data-aos-once="true"
-                    >
-                    <h2 class="text-white"><i class="text-white bi bi-bag"></i> Best Selling</h2>
-                </div>
-
-                <div id="productCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
-                    <div class="carousel-inner" data-aos="fade-up" data-aos-delay="150" data-aos-duration="2000" data-aos-easing="ease-in-out" data-aos-once="true">
-                        <%
-                            ProductDAOImpl daoBest = new ProductDAOImpl();
-                            List<Product> Bestproducts = daoBest.getBestDeals();
-                            for (int i = 0; i < Bestproducts.size(); i += 4) {
-                                boolean isActive = i == 0;
-                        %>
-                        <div class="carousel-item <%= isActive ? "active" : ""%>">
-                            <div class="row d-flex justify-content-center">
-                                <% for (int j = i; j < i + 4 && j < products.size(); j++) {
-                                        Product product = products.get(j);
-                                %>
-                                <div class="col-6 col-md-3 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                    <div class="card shadow bg-body" style="width: 18rem; height: 25rem; transform: scale(0.8); transform-origin: center;">
-                                        <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height: 50%; width: 100%; object-fit: cover;" alt="<%= product.getTitle()%> Image" />
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title fw-bold text-center h3"><%= product.getTitle()%></h5>
-                                            <p class="card-text text-center"><small>(100g)</small></p>
-                                            <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice()%></h6>
-                                            <div class="d-flex justify-content-evenly mt-4">
-                                                <a href="#" class="btn shadow-lg border">
-                                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                                </a>
-                                                <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
-                                                <a href="#" class="btn shadow-lg border">
-                                                    <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <% } %>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
-                    </div>
-                    <!-- Carousel controls -->
-                    <button
-                        class="carousel-control-prev mr-5"
-                        type="button"
-                        data-bs-target="#productCarousel"
-                        data-bs-slide="prev"
-                        >
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                        <i class="text-dark h2 bi bi-arrow-left-circle"></i>
-                    </button>
-                    <button
-                        class="carousel-control-next mx-5"
-                        type="button"
-                        data-bs-target="#productCarousel"
-                        data-bs-slide="next"
-                        >
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                        <i class="text-dark h2 bi bi-arrow-right-circle"></i>
-                    </button>
-                </div>
-        </section>
-        <!-- footer -->
-        <div class="">
-
-            <footer class="bg-dark text-center text-white">
-                <!-- Grid container -->
-                <div class="container p-4 pb-0">
-                    <h2 class="mt-2 mb-4 text-center">Natura</h2>
-                    <!-- Section: Social media -->
-                    <section class="mb-4">
-                        <!-- Facebook -->
-                        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                           ><i class="fab fa-facebook-f"></i
-                            ></a>
-
-                        <!-- Twitter -->
-                        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                           ><i class="fab fa-twitter"></i
-                            ></a>
-
-                        <!-- Google -->
-                        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                           ><i class="fab fa-google"></i
-                            ></a>
-
-                        <!-- Instagram -->
-                        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                           ><i class="fab fa-instagram"></i
-                            ></a>
-
-                        <!-- Linkedin -->
-                        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                           ><i class="fab fa-linkedin-in"></i
-                            ></a>
-
-                        <!-- Github -->
-                        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                           ><i class="fab fa-github"></i
-                            ></a>
-                    </section>
-                    <!-- Section: Social media -->
-                </div>
-                <!-- Grid container -->
-
-                <!-- Copyright -->
-                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                    © 2024 Copyright:
-                    <a class="text-white" href="https://natura.com/">Natura.com</a>
-                </div>
-                <!-- Copyright -->
-            </footer>
-
-        </div>
-        <!-- End of .container -->
+        <%@ include file="./components/footer.jsp" %>
         <!--  -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
