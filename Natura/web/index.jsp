@@ -45,7 +45,7 @@
           >
             <img
               class="img-fluid h-75"
-              src="./images/bag.png"
+              src="${pageContext.request.contextPath}/images/bag.png"
               alt="Natural Food Bag"
             />
           </div>

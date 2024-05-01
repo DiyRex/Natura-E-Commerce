@@ -5,11 +5,26 @@ package models;
  * @author Devin
  */
 public class Product {
+
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
    private int id;
     private String title;
     private String description;
     private double price;
     private int qty; 
+    private String image;
     
     public Product(String title, String description, double price, int quantity) {
         this.title = title;
@@ -18,7 +33,16 @@ public class Product {
         this.qty = quantity;
     }
 
-    public Product(int id, String title, String description, double price, int quantity) {
+    public Product(int id, String title, String description, double price, int quantity, String image) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.qty = quantity;
+        this.image = image;
+    }
+    
+        public Product(int id, String title, String description, double price, int quantity) {
         this.id = id;
         this.title = title;
         this.description = description;

@@ -1,5 +1,6 @@
 package dao;
 
+import javax.servlet.ServletContext;
 import models.Product;
 import utility.DBConnection;
 import java.sql.*;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
-
 
     @Override
     public Product getProduct(int id) throws SQLException {
@@ -30,33 +30,77 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-public List<Product> getAllProducts() throws SQLException {
-    List<Product> products = new ArrayList<>();
-    String sql = "SELECT * FROM product";
-    Connection conn = null;
-    try {
-        conn = DBConnection.getConnection();
-        if (conn == null || conn.isClosed()) {
-            System.err.println("Connection is closed or null");
-        } else {
-            try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-                while (resultSet.next()) {
-                    products.add(new Product(
-                        resultSet.getInt("Product_ID"),
-                        resultSet.getString("Title"),
-                        resultSet.getString("Description"),
-                        resultSet.getDouble("Price"),
-                        resultSet.getInt("Qty")
-                    ));
+    public List<Product> getAllProducts() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product";
+        Connection conn = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn == null || conn.isClosed()) {
+                System.err.println("Connection is closed or null");
+            } else {
+                try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+                    while (resultSet.next()) {
+                        products.add(new Product(
+                                resultSet.getInt("Product_ID"),
+                                resultSet.getString("Title"),
+                                resultSet.getString("Description"),
+                                resultSet.getDouble("Price"),
+                                resultSet.getInt("Qty")
+                        ));
+                    }
                 }
             }
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
         }
-    } finally {
-        if (conn != null) conn.close();
+        return products;
     }
-    return products;
-}
 
+    @Override
+    public List<Product> getAllProductsWithImage(ServletContext context) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT p.Product_ID, p.Title, p.Description, p.Price, p.Qty, i.Image_Path "
+                + "FROM product p LEFT JOIN image i ON p.Product_ID = i.Product_ID";
+
+        // Retrieve the upload directory from the web.xml configuration
+        String uploadDir = context.getInitParameter("UPLOAD_DIRECTORY");
+
+        Connection conn = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn == null || conn.isClosed()) {
+                System.err.println("Connection is closed or null");
+            } else {
+                try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+                    while (resultSet.next()) {
+                        String imagePath = resultSet.getString("Image_Path");
+                        System.out.println(imagePath);
+//                        if (imagePath != null && !imagePath.isEmpty()) {
+//                            imagePath = uploadDir + "\\" + imagePath;  // Append the upload directory to the image path
+//                            System.out.println(uploadDir);
+//                            System.out.println(imagePath);
+//                        }
+                        products.add(new Product(
+                                resultSet.getInt("Product_ID"),
+                                resultSet.getString("Title"),
+                                resultSet.getString("Description"),
+                                resultSet.getDouble("Price"),
+                                resultSet.getInt("Qty"),
+                                imagePath // Use the modified image path
+                        ));
+                    }
+                }
+            }
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return products;
+    }
 
     @Override
     public void updateProduct(Product product) throws SQLException {

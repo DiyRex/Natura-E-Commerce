@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="models.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,89 +28,40 @@
         </style>
     </head>
     <body>
-        <%@ include file="../components/navbar.jsp" %>
+        <%@ include file="../components/nav.jsp" %>
         <div class="container-md">
             <h1 class="text-center h2 fw-bold mt-5">Product Store</h1>
             <div class="row mt-5">
                 <!-- Start Card -->
-                <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
-                    <div class="card shadow" style="width: 18rem; height: 25rem">
-                        <img src="../images/1carrot.jpg" class="card-img-top fit-image" alt="Carrot Image" />
-                        <div class="card-body text-center">
-                            <h5 class="card-title fw-bold text-center h3">Carrot</h5>
-                            <p class="card-text text-center"><small>(100g)</small></p>
-                            <h6 class="text-center fw-bolder h5">LKR 120.00</h6>
-                            <div class="d-flex justify-content-evenly mt-4">
-                                <a href="#" class="btn shadow-lg border">
-                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                </a>
-                                <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
-                                <a href="#" class="btn shadow-lg border">
-                                    <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
-                                </a>
-                            </div>
-                        </div>
+                <%-- Retrieve the product list from request scope --%>
+        <% List<Product> products = (List<Product>) request.getAttribute("products");
+            if (products != null) {
+                for (Product product : products) {
+        %>
+        <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
+            <div class="card shadow" style="width: 18rem; height: 25rem">
+                <img src="./images/Products/<%= product.getImage() %>" class="card-img-top fit-image" style="height:50%;" alt="<%= product.getTitle() %> Image" />
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold text-center h3"><%= product.getTitle() %></h5>
+                    <p class="card-text text-center"><small>(100g)</small></p>
+                    <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice() %></h6>
+                    <div class="d-flex justify-content-evenly mt-4">
+                        <a href="#" class="btn shadow-lg border">
+                            <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
+                        </a>
+                        <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
+                        <a href="#" class="btn shadow-lg border">
+                            <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
+                        </a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <%      }
+            }
+        %>
 
                 <!-- end Card -->
-                <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
-                    <div class="card shadow" style="width: 18rem; height: 25rem">
-                        <img src="../images/1carrot.jpg" class="card-img-top fit-image" alt="Carrot Image" />
-                        <div class="card-body text-center">
-                            <h5 class="card-title fw-bold text-center h3">Carrot</h5>
-                            <p class="card-text text-center"><small>(100g)</small></p>
-                            <h6 class="text-center fw-bolder h5">LKR 120.00</h6>
-                            <div class="d-flex justify-content-evenly mt-4">
-                                <a href="#" class="btn shadow-lg border">
-                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                </a>
-                                <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
-                                <a href="#" class="btn shadow-lg border">
-                                    <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
-                    <div class="card shadow" style="width: 18rem; height: 25rem">
-                        <img src="../images/1carrot.jpg" class="card-img-top fit-image" alt="Carrot Image" />
-                        <div class="card-body text-center">
-                            <h5 class="card-title fw-bold text-center h3">Carrot</h5>
-                            <p class="card-text text-center"><small>(100g)</small></p>
-                            <h6 class="text-center fw-bolder h5">LKR 120.00</h6>
-                            <div class="d-flex justify-content-evenly mt-4">
-                                <a href="#" class="btn shadow-lg border">
-                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                </a>
-                                <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
-                                <a href="#" class="btn shadow-lg border">
-                                    <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
-                    <div class="card shadow" style="width: 18rem; height: 25rem">
-                        <img src="../images/1carrot.jpg" class="card-img-top fit-image" alt="Carrot Image" />
-                        <div class="card-body text-center">
-                            <h5 class="card-title fw-bold text-center h3">Carrot</h5>
-                            <p class="card-text text-center"><small>(100g)</small></p>
-                            <h6 class="text-center fw-bolder h5">LKR 120.00</h6>
-                            <div class="d-flex justify-content-evenly mt-4">
-                                <a href="#" class="btn shadow-lg border">
-                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                </a>
-                                <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
-                                <a href="#" class="btn shadow-lg border">
-                                    <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- Script -->
             <script>
