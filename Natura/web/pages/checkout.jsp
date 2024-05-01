@@ -30,10 +30,7 @@
                             <input class="form-check-input mt-0" type="radio" name="addressOption" id="defaultAddress" value="default" checked aria-label="Default address">
                         </div>
                         <textarea class="form-control" aria-label="Default address" disabled style="height: 150px;">
-John Doe
-Apartment No. 4B
-123 Main St
-City, State, 90210
+<%= session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"%>
                         </textarea>
                     </div>
                 </div>
