@@ -26,11 +26,10 @@ public class clientProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       ServletContext context = getServletContext();
         ProductDAO productDAO = new ProductDAOImpl();
 
         try {
-            List<Product> products = productDAO.getAllProductsWithImage(context);
+            List<Product> products = productDAO.getAllProductsWithImage();
             request.setAttribute("products", products);
             request.getRequestDispatcher("/pages/storepage.jsp").forward(request, response);
         } catch (SQLException e) {

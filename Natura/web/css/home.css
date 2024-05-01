@@ -73,7 +73,7 @@
 }
 
 #productCarousel .carousel-control-prev {
-    left: -10%; /* Positioning the left arrow outside the carousel */
+    left: -5%; /* Positioning the left arrow outside the carousel */
 }
 
 #productCarousel .carousel-control-next {
