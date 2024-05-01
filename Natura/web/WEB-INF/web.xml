@@ -51,6 +51,14 @@
             <param-value/>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>addToCartServlet</servlet-name>
+        <servlet-class>clientController.addToCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checkoutServlet</servlet-name>
+        <servlet-class>clientController.checkoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -94,6 +102,14 @@
     <servlet-mapping>
         <servlet-name>cartUpdateServlet</servlet-name>
         <url-pattern>/cartUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addToCartServlet</servlet-name>
+        <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checkoutServlet</servlet-name>
+        <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

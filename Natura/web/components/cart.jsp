@@ -161,7 +161,10 @@
                         <span id="totalCost">LKR <%= totalCost%></span>
                     </div>
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="button" class="btn btn-success">Checkout <i class="bi bi-arrow-right"></i></button>
+                        <form action="/checkout" method="get">
+                             <input type="hidden" id="hiddenTotal" name="total" value="<%= totalCost%>">
+                        <button type="submit" class="btn btn-success">Checkout <i class="bi bi-arrow-right"></i></button>
+                        </form>
                     </div>
                 </div>
 
@@ -183,11 +186,13 @@
                         totalCost += price * count;
                     });
                     document.getElementById('totalCost').textContent = 'LKR ' + totalCost.toFixed(2);
+                    document.getElementById('hiddenTotal').value = totalCost.toFixed(2);
+                    console.log(totalCost.toFixed(2))
                 }
 
                 function updateCart(productId, quantityChange, cartId) {
-    console.log("Updating cart with:", productId, quantityChange, cartId);
-    console.log("/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange);
+//    console.log("Updating cart with:", productId, quantityChange, cartId);
+//    console.log("/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange);
     // Construct the URL using template literals directly in the fetch call
     const url = "/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange;
     console.log("Request URL:", url);

@@ -28,6 +28,7 @@
             // Initialize the username as "Guest" by default
             String userName = "Guest";
             String userID = null;
+            String AddressLine = "No Address";
 
             // Retrieve the user object from the session if it exists
             User user = (session != null) ? (User) session.getAttribute("user") : null;
@@ -36,6 +37,8 @@
             if (user != null) {
                 userName = user.getName();
                 userID = String.valueOf(user.getId());
+                AddressLine
+                
             }
             session.setAttribute("userName", userName);
             session.setAttribute("userID", userID);
