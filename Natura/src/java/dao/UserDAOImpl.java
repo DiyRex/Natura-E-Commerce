@@ -22,24 +22,26 @@ public class UserDAOImpl implements UserDAO {
             if (conn == null || conn.isClosed()) {
                 System.err.println("Connection is closed or null");
             } else {
-                try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-                    while (resultSet.next()) {
+                try (PreparedStatement statement = conn.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) { 
                         users.add(new User(
-                            resultSet.getInt("User_ID"),
-                            resultSet.getString("Name"),
-                            resultSet.getString("Contact"),
-                            resultSet.getString("Apt_No"),
-                            resultSet.getString("Street"),
-                            resultSet.getString("City"),
-                            resultSet.getString("State"),
-                            resultSet.getString("ZipCode"),
-                            resultSet.getString("Email")
+                                resultSet.getInt("User_ID"),
+                                resultSet.getString("Name"),
+                                resultSet.getString("Contact"),
+                                resultSet.getString("Apt_No"),
+                                resultSet.getString("Street"),
+                                resultSet.getString("City"),
+                                resultSet.getString("State"),
+                                resultSet.getString("ZipCode"),
+                                resultSet.getString("Email")
                         ));
                     }
                 }
             }
         } finally {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
         return users;
     }
@@ -59,11 +61,13 @@ public class UserDAOImpl implements UserDAO {
                 stmt.setString(6, user.getState());
                 stmt.setString(7, user.getZip_code());
                 stmt.setString(8, user.getEmail());
-                stmt.setString(9,user.getPassword());
+                stmt.setString(9, user.getPassword());
                 stmt.executeUpdate();
             }
         } finally {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
     }
 
@@ -79,21 +83,23 @@ public class UserDAOImpl implements UserDAO {
                 try (ResultSet resultSet = stmt.executeQuery()) {
                     if (resultSet.next()) {
                         user = new User(
-                            resultSet.getInt("User_ID"),
-                            resultSet.getString("Name"),
-                            resultSet.getString("Contact"),
-                            resultSet.getString("Apt_No"),
-                            resultSet.getString("Street"),
-                            resultSet.getString("City"),
-                            resultSet.getString("State"),
-                            resultSet.getString("ZipCode"),
-                            resultSet.getString("Email")
+                                resultSet.getInt("User_ID"),
+                                resultSet.getString("Name"),
+                                resultSet.getString("Contact"),
+                                resultSet.getString("Apt_No"),
+                                resultSet.getString("Street"),
+                                resultSet.getString("City"),
+                                resultSet.getString("State"),
+                                resultSet.getString("ZipCode"),
+                                resultSet.getString("Email")
                         );
                     }
                 }
             }
         } finally {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
         return user;
     }
@@ -117,7 +123,9 @@ public class UserDAOImpl implements UserDAO {
                 stmt.executeUpdate();
             }
         } finally {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
     }
 
@@ -132,38 +140,43 @@ public class UserDAOImpl implements UserDAO {
                 stmt.executeUpdate();
             }
         } finally {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
     }
 
     @Override
     public User loginUser(String email, String password) throws Exception {
-        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM user u INNER JOIN cart c ON u.User_ID = c.User_ID WHERE email = ? AND password = ?";
         Connection conn = null;
         User user = null;
         try {
             conn = DBConnection.getConnection();
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, email);
-                stmt.setString(2,password);
+                stmt.setString(2, password);
                 try (ResultSet resultSet = stmt.executeQuery()) {
                     if (resultSet.next()) {
                         user = new User(
-                            resultSet.getInt("User_ID"),
-                            resultSet.getString("Name"),
-                            resultSet.getString("Contact"),
-                            resultSet.getString("Apt_No"),
-                            resultSet.getString("Street"),
-                            resultSet.getString("City"),
-                            resultSet.getString("State"),
-                            resultSet.getString("ZipCode"),
-                            resultSet.getString("Email")
+                                resultSet.getInt("User_ID"),
+                                resultSet.getString("Name"),
+                                resultSet.getString("Contact"),
+                                resultSet.getString("Apt_No"),
+                                resultSet.getString("Street"),
+                                resultSet.getString("City"),
+                                resultSet.getString("State"),
+                                resultSet.getString("ZipCode"),
+                                resultSet.getString("Email"),
+                                resultSet.getInt("Cart_ID")
                         );
                     }
                 }
             }
         } finally {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
         return user;
     }

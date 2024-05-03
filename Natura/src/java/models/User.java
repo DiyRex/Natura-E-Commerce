@@ -6,6 +6,7 @@ package models;
  */
 public class User {
     private int id;
+    private int cart_id;
     private String name;
     private String contact;
     private String apt_no;
@@ -27,6 +28,20 @@ public class User {
        this.state = state;
        this.zip_code = zip_code;
        this.email = email;
+    }
+    
+    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, int cart_id)
+    {
+       this.id = id;
+       this.name = name;
+       this.contact = contact;
+       this.apt_no = apt_no;
+       this.street = street;
+       this.city = city;
+       this.state = state;
+       this.zip_code = zip_code;
+       this.email = email;
+       this.cart_id = cart_id;
     }
     
     public User(String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, String password)
@@ -55,6 +70,21 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+    
+    /**
+     * @return the id
+     */
+    public int getCartId() {
+        return cart_id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setCartId(int cart_id) {
+        this.cart_id = cart_id;
+    }
+
 
     /**
      * @return the name

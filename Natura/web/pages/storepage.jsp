@@ -50,13 +50,10 @@
                     <p class="card-text text-center"><small>(100g)</small></p>
                     <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice() %></h6>
                     <div class="d-flex justify-content-evenly mt-4">
-                        <a href="#" class="btn shadow-lg border">
+<!--                        <a href="#" class="btn shadow-lg border">
                             <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                        </a>
-                        <a href="#" class="btn shadow-lg border bg-secondary text-white">Buy Now</a>
-                        <a href="#" class="btn shadow-lg border">
-                            <i class="bi bi-cart-plus text-primary h5 fw-bold"></i>
-                        </a>
+                        </a>-->
+                        <a href="#" class="btn shadow-lg border bg-secondary text-white"><i class="bi bi-cart-plus text-white h5 fw-bold"></i> Add to Cart</a>
                     </div>
                 </div>
             </div>

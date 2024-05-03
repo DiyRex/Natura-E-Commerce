@@ -28,6 +28,7 @@
             // Initialize the username as "Guest" by default
             String userName = "Guest";
             String userID = null;
+            String cartID = null;
             String addressLine = "";
 
             // Retrieve the user object from the session if it exists
@@ -37,6 +38,8 @@
             if (user != null) {
                 userName = user.getName();
                 userID = String.valueOf(user.getId());
+                cartID = String.valueOf(user.getCartId());
+                System.out.println("cart id is "+cartID);
                 // Build the address string, checking for nulls to avoid "null" in the output
                 addressLine = userName + " \n"
                         + (user.getApt_no() != null ? user.getApt_no() : "") + " \n"
@@ -47,6 +50,7 @@
             }
             session.setAttribute("userName", userName);
             session.setAttribute("userID", userID);
+            session.setAttribute("cartID", cartID);
             session.setAttribute("addressLine", addressLine);
         %>
 
