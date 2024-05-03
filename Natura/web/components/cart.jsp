@@ -133,9 +133,9 @@
             <div class="offcanvas-body">
                 <div class="cart-items">
                     <% if (cartItems != null && !cartItems.isEmpty()) {
-                            for (Cart item : cartItems) {%>
-                    <input type="hidden" id="hiddenCartId" value="<%= item.getCart_id()%>">
+                            for (Cart item : cartItems) {%>      
                     <div class="list-group-item d-flex justify-content-between align-items-center cart-item">
+                        <input type="hidden" id="hiddenCartId" value="<%= item.getCart_id()%>">
                         <div class="item-details w-100">
                             <span class="product-name font-weight-bold"><%= item.getProduct()%></span> - 
                             <span class="product-price">LKR <%= item.getPrice()%></span>
@@ -162,8 +162,8 @@
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <form action="/checkout" method="get">
-                             <input type="hidden" id="hiddenTotal" name="total" value="<%= totalCost%>">
-                        <button type="submit" class="btn btn-success">Checkout <i class="bi bi-arrow-right"></i></button>
+                            <input type="hidden" id="hiddenTotal" name="total" value="<%= totalCost%>">
+                            <button type="submit" class="btn btn-success">Checkout <i class="bi bi-arrow-right"></i></button>
                         </form>
                     </div>
                 </div>
@@ -183,6 +183,9 @@
                     document.querySelectorAll('.product-count').forEach(function (productCountInput) {
                         const price = parseFloat(productCountInput.getAttribute('data-price'));
                         const count = parseInt(productCountInput.value);
+                        if (count <= 0) {
+                            alert("remove ?")
+                        }
                         totalCost += price * count;
                     });
                     document.getElementById('totalCost').textContent = 'LKR ' + totalCost.toFixed(2);
@@ -193,28 +196,26 @@
                 function updateCart(productId, quantityChange, cartId) {
 //    console.log("Updating cart with:", productId, quantityChange, cartId);
 //    console.log("/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange);
-    // Construct the URL using template literals directly in the fetch call
-    const url = "/cartUpdate?productId="+productId+"&cartId="+cartId+"&quantityChange="+quantityChange;
-    console.log("Request URL:", url);
+                    // Construct the URL using template literals directly in the fetch call
+                    const url = "/cartUpdate?productId=" + productId + "&cartId=" + cartId + "&quantityChange=" + quantityChange;
+                    console.log("Request URL:", url);
 
-    // Using Fetch API to make a GET request
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Response:', data);
-        })
-        .catch(error => {
-            console.error('Failed to update cart:', error);
-        });
-}
-
-
-
+                    // Using Fetch API to make a GET request
+                    fetch(url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok ' + response.statusText);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log('Response:', data);
+                            })
+                            .catch(error => {
+                                console.error('Failed to update cart:', error);
+                            });
+                }
+       
                 document.querySelectorAll('.btn-increment').forEach(function (button) {
                     button.addEventListener('click', function () {
                         const input = button.parentElement.querySelector('.product-count');
@@ -234,12 +235,11 @@
                         const productId = button.getAttribute('data-product-id');
                         const cartId = button.getAttribute('data-cart-id');
                         let count = parseInt(input.value);
-                        if (count > 1) {
-                            count--;
-                            input.value = count;
-                            updateTotalCost();
-                            updateCart(productId, -1, cartId);  // Call updateCart function with -1
-                        }
+                        count--;
+                        input.value = count;
+                        updateTotalCost();
+                        updateCart(productId, -1, cartId);  // Call updateCart function with -1
+                    }
                     });
                 });
 
