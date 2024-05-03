@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import java.sql.Connection;
@@ -22,7 +18,7 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public List<Cart> getCartProducts(String userId) throws SQLException {
         List<Cart> carts = new ArrayList<>();
-        String sql = "SELECT p.Title AS ProductName, p.Price AS ProductPrice, ci.Qty AS Quantity, c.Cart_ID AS CartId, p.Product_ID AS ProductID "
+        String sql = "SELECT ci.Item_ID AS Item_ID, p.Title AS ProductName, p.Price AS ProductPrice, ci.Qty AS Quantity, c.Cart_ID AS CartId, p.Product_ID AS ProductID "
                 + "FROM user u "
                 + "JOIN cart c ON u.User_ID = c.User_ID "
                 + "JOIN cart_items ci ON c.Cart_ID = ci.Cart_ID "
@@ -36,14 +32,16 @@ public class CartDAOImpl implements CartDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
+                    int Item_ID = rs.getInt("Item_ID");
                     String productName = rs.getString("ProductName");
                     double productPrice = rs.getDouble("ProductPrice");
                     int quantity = rs.getInt("Quantity");
                     int cartId = rs.getInt("CartId");
                     int productID = rs.getInt("ProductID");
+                    
 
                     // Assuming Cart constructor: Cart(int user_id, int cart_id, String product, double price, int qty)
-                    Cart cart = new Cart(Integer.parseInt(userId), cartId, productID, productName, (int) productPrice, quantity);
+                    Cart cart = new Cart(Item_ID, Integer.parseInt(userId), cartId, productID, productName, (int) productPrice, quantity);
                     carts.add(cart);
                 }
             }
@@ -53,7 +51,22 @@ public class CartDAOImpl implements CartDAO {
 
     @Override
     public void deleteItem(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM cart_items WHERE Item_ID = ?;";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("Item deleted successfully!");
+            } else {
+                System.out.println("No item found with ID: " + id);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL error occurred: " + e.getMessage());
+        }
     }
 
     @Override

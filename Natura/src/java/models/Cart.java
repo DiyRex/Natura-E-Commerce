@@ -5,7 +5,8 @@ package models;
  * @author Devin
  */
 public class Cart {
-
+    
+    private int id;
     private int user_id;
     private int cart_id;
     private int product_id;
@@ -13,7 +14,7 @@ public class Cart {
     private int price;
     private int qty;
     
-    public Cart(int user_id, int cart_id, int product_id, String product, int price, int qty){
+    public Cart( int user_id, int cart_id, int product_id, String product, int price, int qty){
         this.user_id = user_id;
         this.cart_id = cart_id;
         this.product_id = product_id;
@@ -22,6 +23,29 @@ public class Cart {
         this.qty = qty;
     }
     
+    public Cart(int id, int user_id, int cart_id, int product_id, String product, int price, int qty){
+        this.id = id;
+        this.user_id = user_id;
+        this.cart_id = cart_id;
+        this.product_id = product_id;
+        this. product = product;
+        this.price = price;
+        this.qty = qty;
+    }
+    
+    /**
+     * @return the user_id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param user_id the user_id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
     
     /**
      * @return the user_id

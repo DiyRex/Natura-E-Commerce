@@ -8,6 +8,8 @@ import dao.CartDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,22 @@ public class cartUpdateServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int itemID = Integer.parseInt(request.getParameter("itemID"));
+        CartDAOImpl cartDao = new CartDAOImpl();
+        try {
+            cartDao.deleteItem(itemID);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"status\":\"success\"}");
+        } catch (SQLException e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"status\":\"error\",\"message\":\"" + e.getMessage() + "\"}");
+        } catch (Exception ex) {
+            Logger.getLogger(cartUpdateServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
