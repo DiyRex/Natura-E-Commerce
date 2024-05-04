@@ -31,24 +31,29 @@ public class cartUpdateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userID");
 
-    
-    CartDAOImpl cartDao = new CartDAOImpl();
-    List<Cart> cartItems = null;
+        CartDAOImpl cartDao = new CartDAOImpl();
+        List<Cart> cartItems = null;
 
-    try {
-        cartItems = cartDao.getCartProducts(userId);
-        session.setAttribute("cartItems", cartItems); // Optional: store in session for other uses
-    } catch (Exception e) {
-        
-    }
-
-    // Calculate total cost
-    int totalCost = 0;
-    if (cartItems != null) {
-        for (Cart item : cartItems) {
-            totalCost += item.getPrice() * item.getQty();
+        try {
+            cartItems = cartDao.getCartProducts(userId);
+            // Store cart items in session
+            session.setAttribute("cartItems", cartItems);
+        } catch (Exception e) {
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("<p>Error retrieving cart items: " + e.getMessage() + "</p>");
+            return;
         }
-    }
+
+        // Optionally calculate total cost if needed elsewhere
+        int totalCost = cartItems.stream().mapToInt(item -> item.getPrice() * item.getQty()).sum();
+        session.setAttribute("totalCost", totalCost);
+
+        // Forward to a JSP or another servlet if needed
+        // Or simply confirm the operation
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("<p>Cart updated. Total cost: " + totalCost + "</p>");
     }
     
     @Override

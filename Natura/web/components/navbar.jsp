@@ -7,6 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+     <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+            />
     <style>
         .navbar-dark .nav-item .nav-link {
             color: #fff;
@@ -49,13 +53,13 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/"><span class="h5">Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products">Products</a>
+                    <a class="nav-link" href="/products"><span class="h5">Store</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">About Us</a>
+                    <a class="nav-link" href="/about"><span class="h5">About Us</span></a>
                 </li>
             </ul>
             <!-- Left links -->
@@ -69,20 +73,20 @@
             </form>
 
             <!-- Right links -->
-            <ul class="navbar-nav mb-2 mb-lg-0">
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
                 <!-- Notifications Dropdown -->
-                <li class="nav-item dropdown d-flex flex-row justify-content-center align-items-center">
-                    <a class="nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
+                <li class="nav-item dropdown d-flex flex-row justify-content-start align-items-center">
+                    <button class="btn nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="h3 pt-2 text-white  fas fa-bell"></i>
-                    </a>
+                    </button>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end notifications-list p-1" aria-labelledby="navbarDropdown">
                         <!-- Notification items here -->
                     </ul>
                 </li>
-                <li class="nav-item d-flex flex-row justify-content-center align-items-center">
-                    <button class="btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                <li class="nav-item d-flex flex-row justify-content-start align-items-center">
+                    <button class="nav-link btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="btncheck()">
                     <i class="bi h3 text-white bi-cart"></i>
                 </button>
                     
@@ -90,11 +94,11 @@
                 
                 <!-- User Profile Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
+                    <button class="btn nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(2).jpg" class="rounded-circle img-fluid"
                              height='35' width='35'>
-                    </a>
+                    </button>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarProfileDropdown">
                         <!-- Profile Name -->
