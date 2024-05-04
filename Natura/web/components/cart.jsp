@@ -134,7 +134,7 @@
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <form action="/checkout" method="get">
-                            <input type="hidden" id="hiddenTotal" name="total" value="<%= totalCost%>">
+                            <input type="hidden" id="hiddenTotal" name="total" value="<%=totalCost%>">
                             <button type="submit" class="btn btn-success">Checkout <i class="bi bi-arrow-right"></i></button>
                         </form>
                     </div>
@@ -171,8 +171,13 @@
                 };
             function createCartItemCards() {
                 const cartItemsContainer = document.querySelector('.cart-items');
+                const costItemsContainer = document.querySelector('.total-cost-container');
                 cartItemsContainer.innerHTML = '';
-                if (cartItemsJS.length === 0) {
+                 if(<%=userId == null%>){
+                     cartItemsContainer.innerHTML = '<p class="text-center h5 text-muted">Login to view the cart</p>';
+                     costItemsContainer.innerHTML = '';
+                 }
+                else if (cartItemsJS.length === 0) {
                     cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
                 } else {
                     cartItemsJS.forEach(item => {
@@ -204,7 +209,8 @@
                 document.querySelectorAll('.product-count').forEach(input => {
                     totalCost += parseFloat(input.getAttribute('data-price')) * parseInt(input.value);
                 });
-                document.getElementById('totalCost').textContent = `LKR \${totalCost}`;
+                document.getElementById('totalCost').textContent = `LKR \${totalCost}.00`;
+                document.getElementById('hiddenTotal').value = `\${totalCost}.00`;
             }
 
             function updateCart(productId, quantityChange, cartId, itemId, type) {
