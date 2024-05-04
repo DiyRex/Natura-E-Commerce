@@ -8,12 +8,15 @@ import dao.CartDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import models.Cart;
 
 /**
  *
@@ -21,8 +24,35 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 public class cartUpdateServlet extends HttpServlet {
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("userID");
+
+    
+    CartDAOImpl cartDao = new CartDAOImpl();
+    List<Cart> cartItems = null;
+
+    try {
+        cartItems = cartDao.getCartProducts(userId);
+        session.setAttribute("cartItems", cartItems); // Optional: store in session for other uses
+    } catch (Exception e) {
+        
+    }
+
+    // Calculate total cost
+    int totalCost = 0;
+    if (cartItems != null) {
+        for (Cart item : cartItems) {
+            totalCost += item.getPrice() * item.getQty();
+        }
+    }
+    }
+    
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        String userId = request.getParameter("userId");
         int productId = Integer.parseInt(request.getParameter("productId"));
@@ -63,7 +93,29 @@ public class cartUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        try {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            int cartId = Integer.parseInt(request.getParameter("cartId"));
+            int quantityChange = Integer.parseInt(request.getParameter("quantityChange"));
+
+            CartDAOImpl cartDao = new CartDAOImpl();
+            cartDao.addOrUpdate(productId, cartId, quantityChange);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\":\"success\"}");
+        } catch (NumberFormatException | NullPointerException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\":\"error\",\"message\":\"Invalid input parameters\"}");
+        } catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\":\"error\",\"message\":\"" + ex.getMessage() + "\"}");
+        }
     }
 
 }

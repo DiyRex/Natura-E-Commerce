@@ -26,6 +26,9 @@
         
     </style>
 </head>
+<div class="cart-container">
+<%@ include file="./cart.jsp" %>
+</div>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-success">
     <!-- Container wrapper -->
@@ -79,7 +82,7 @@
                     </ul>
                 </li>
                 <li class="nav-item d-flex flex-row justify-content-center align-items-center">
-                    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                    <button class="btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
                     <i class="bi h3 text-white bi-cart"></i>
                 </button>
                     

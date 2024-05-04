@@ -39,7 +39,7 @@
                 userName = user.getName();
                 userID = String.valueOf(user.getId());
                 cartID = String.valueOf(user.getCartId());
-                System.out.println("cart id is "+cartID);
+                System.out.println("cart id is " + cartID);
                 // Build the address string, checking for nulls to avoid "null" in the output
                 addressLine = userName + " \n"
                         + (user.getApt_no() != null ? user.getApt_no() : "") + " \n"
@@ -47,6 +47,9 @@
                         + (user.getCity() != null ? user.getCity() : "") + " \n"
                         + (user.getState() != null ? user.getState() : "") + " \n"
                         + (user.getZip_code() != null ? user.getZip_code() : "");
+            } else {
+                response.sendRedirect("/login"); // Redirects to a login page
+                return;
             }
             session.setAttribute("userName", userName);
             session.setAttribute("userID", userID);
@@ -94,9 +97,9 @@
                             />
                     </div>
                 </div>
-                <div class="cart-container">
-                    <%@ include file="./components/cart.jsp" %>
-                </div>
+                <!--                <div class="cart-container">
+                <%--<%@ include file="./components/cart.jsp" %>--%>
+            </div>-->
             </section>
         </div>
         <section class="container mt-5 mb-5 pb-5 pt-5">
@@ -129,9 +132,9 @@
                                         <p class="card-text text-center"><small>(100g)</small></p>
                                         <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice()%></h6>
                                         <div class="d-flex justify-content-evenly mt-4">
-<!--                                            <a href="#" class="btn shadow-lg border">
-                                                <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                            </a>-->
+                                            <!--                                            <a href="#" class="btn shadow-lg border">
+                                                                                            <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
+                                                                                        </a>-->
                                             <a href="#" class="btn shadow-lg border bg-secondary text-white"><i class="bi bi-cart-plus text-white h5 fw-bold"></i> Add to Cart</a>
                                         </div>
                                     </div>
@@ -201,9 +204,9 @@
                                             <p class="card-text text-center"><small>(100g)</small></p>
                                             <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice()%></h6>
                                             <div class="d-flex justify-content-evenly mt-4">
-<!--                                                <a href="#" class="btn shadow-lg border">
-                                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
-                                                </a>-->
+                                                <!--                                                <a href="#" class="btn shadow-lg border">
+                                                                                                    <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
+                                                                                                </a>-->
                                                 <a href="#" class="btn shadow-lg border bg-secondary text-white"><i class="bi bi-cart-plus text-white h5 fw-bold"></i> Add to Cart</a>
                                             </div>
                                         </div>

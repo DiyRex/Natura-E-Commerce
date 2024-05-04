@@ -74,10 +74,12 @@ public class CartDAOImpl implements CartDAO {
         Connection conn = null;
         PreparedStatement selectStmt = null;
         PreparedStatement updateStmt = null;
+        PreparedStatement addStmt = null;
         ResultSet rs = null;
 
         String selectSql = "SELECT Qty FROM cart_items WHERE Cart_ID = ? AND Product_ID = ?";
         String updateSql = "UPDATE cart_items SET Qty = Qty + ? WHERE Cart_ID = ? AND Product_ID = ?";
+        String addSql = "INSERT INTO cart_items (Cart_ID,Product_ID,Qty) VALUES (?,?,?)";
 
         try {
             conn = DBConnection.getConnection();
@@ -101,7 +103,14 @@ public class CartDAOImpl implements CartDAO {
                 int affectedRows = updateStmt.executeUpdate();
                 System.out.println("Updated rows: " + affectedRows);
             } else {
-                System.out.println("Product does not exist in the cart, no update performed.");
+                // Product doesn't exists, insert
+                addStmt = conn.prepareStatement(addSql);
+                addStmt.setInt(1,cartId);
+                addStmt.setInt(2,productId);
+                addStmt.setInt(3,newQuantity);
+                int affectedRows = addStmt.executeUpdate();
+                System.out.println("Updated rows: " + affectedRows);
+                System.out.println("Product does not exist in the cart, Inserted.");
             }
 
             conn.commit(); // Commit transaction
