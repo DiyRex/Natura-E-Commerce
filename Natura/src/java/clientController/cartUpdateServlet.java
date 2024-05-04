@@ -4,6 +4,7 @@
  */
 package clientController;
 
+import com.google.gson.Gson;
 import dao.CartDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,25 +36,25 @@ public class cartUpdateServlet extends HttpServlet {
         List<Cart> cartItems = null;
 
         try {
+            // Retrieve the cart products for the user
             cartItems = cartDao.getCartProducts(userId);
-            // Store cart items in session
-            session.setAttribute("cartItems", cartItems);
-        } catch (Exception e) {
-            response.setContentType("text/html");
+
+            // Convert the list of cart items to JSON using Gson
+            Gson gson = new Gson();
+            String jsonResponse = gson.toJson(cartItems);
+
+            // Set the response type to JSON and send the cart items as a response
+            response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("<p>Error retrieving cart items: " + e.getMessage() + "</p>");
+            response.getWriter().write(jsonResponse);
+
+        } catch (Exception e) {
+            // Handle exceptions and send an error in JSON format
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"error\":\"Error retrieving cart items: " + e.getMessage() + "\"}");
             return;
         }
-
-        // Optionally calculate total cost if needed elsewhere
-        int totalCost = cartItems.stream().mapToInt(item -> item.getPrice() * item.getQty()).sum();
-        session.setAttribute("totalCost", totalCost);
-
-        // Forward to a JSP or another servlet if needed
-        // Or simply confirm the operation
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("<p>Cart updated. Total cost: " + totalCost + "</p>");
     }
     
     @Override

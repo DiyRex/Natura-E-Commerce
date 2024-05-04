@@ -77,13 +77,12 @@
                     const userId = "<%=(String) session.getAttribute("userID")%>";
                     const cartId = "<%=(String) session.getAttribute("cartID")%>";
                     var productId = button.getAttribute("data-product-id");
-
+                    
                     // URL-encoded form data
                     const formData = new URLSearchParams();
                     formData.append('productId', productId);
                     formData.append('cartId', cartId);
                     formData.append('quantityChange', '1');
-
                     fetch('/cartUpdate', {
                         method: 'POST',
                         headers: {

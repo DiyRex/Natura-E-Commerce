@@ -149,204 +149,129 @@
         <% application.setAttribute("bootstrapJsIncluded", "true"); %>
         <% }%>
         <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cartItemsJS = [];
+
             function getCartItems() {
-                var cartItemsJS = [];
-                fetch('/cartUpdate')
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok: ' + response.statusText);
-                            }
-            <%
-                List<Cart> cart_Items = null;
-
-                cart_Items = (List<Cart>) session.getAttribute("cartItems");
-
-                if (cart_Items != null && !cart_Items.isEmpty()) {
-                    for (Cart item : cart_Items) {
-            %>
-                            cartItemsJS.push({
-                                id: '<%= item.getId()%>',
-                                cartId: '<%= item.getCart_id()%>',
-                                productName: '<%= item.getProduct()%>',
-                                price: <%= item.getPrice()%>,
-                                quantity: <%= item.getQty()%>,
-                                productId: '<%= item.getProduct_id()%>'
-                            });
-            <%
-                    }
-                }
-            %>
-                            return;  // Assuming the server responds with JSON
-                        })
-                        .catch(error => {
-                            console.error('Failed to fetch data:', error);
-                        });
-
-                return cartItemsJS;
-            }
-            const btncheck = () => {
-                console.log("clicked");
-                var cartItems = getCartItems();
-                console.log(cartItems)
-
-            }
-            document.addEventListener("DOMContentLoaded", function () {
-                const cartButton = document.querySelector('#cartbtn');
-                cartButton.addEventListener('click', console.log("wake"));
-                var cartItemsJS = [];
-            <% if (cartItems != null && !cartItems.isEmpty()) {
-                    for (Cart item : cartItems) {%>
-                // Push each cart item's data into the JavaScript array
-                cartItemsJS.push({
-                    id: '<%= item.getId()%>',
-                    cartId: '<%= item.getCart_id()%>',
-                    productName: '<%= item.getProduct()%>',
-                    price: '<%= item.getPrice()%>',
-                    quantity: '<%= item.getQty()%>',
-                    productId: '<%= item.getProduct_id()%>'
-                });
-            <%   }
-                }%>
-
-                function createCartItemCards(cartItemsJS) {
-                    const cartItemsContainer = document.querySelector('.cart-items');
-                    // Clear existing content
-                    cartItemsContainer.innerHTML = '';
-                    if (cartItemsJS.length === 0) {
-                        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
-                    } else {
-                        cartItemsJS.forEach(item => {
-                            const card = document.createElement('div');
-                            card.className = 'list-group-item d-flex justify-content-between align-items-center cart-item';
-                            card.id = `item\${item.id}`;
-                            card.innerHTML = `
-                    <input type="hidden" id="hiddenCartId" value="\${item.cartId}">
-                    <input type="hidden" id="hiddenItemId" value="\${item.id}">
-                    <div class="item-details w-100">
-                        <span class="product-name font-weight-bold">\${item.productName}</span> - 
-                        <span class="product-price">LKR \${item.price}</span>
-                    </div>
-                    <div class="input-group ml-5">
-                        <button class="btn btn-outline-secondary btn-decrement" type="button" data-cart-id="\${item.cartId}" data-product-id="\${item.productId}" data-item-id="\${item.id}">
-                            <i class="bi bi-dash-circle"></i>
-                        </button>
-                        <input type="text" class="form-control product-count text-center" value="\${item.quantity}" data-price="\${item.price}" readonly style="max-width: 60px;">
-                        <button class="btn btn-outline-secondary btn-increment" type="button" data-cart-id="\${item.cartId}" data-product-id="\${item.productId}" data-item-id="\${item.id}">
-                            <i class="bi bi-plus-circle"></i>
-                        </button>
-                    </div>
-                `;
-                            cartItemsContainer.appendChild(card);
-                        });
-                        attachEventListeners();
-                    }
-                }
-
-                // Log the complete array to the console
-                console.log(cartItemsJS);
-                createCartItemCards(cartItemsJS);
-                attachEventListeners();
-                function updateTotalCost() {
-                    let totalCost = 0;
-                    document.querySelectorAll('.product-count').forEach(function (productCountInput) {
-                        const price = parseFloat(productCountInput.getAttribute('data-price'));
-                        const count = parseInt(productCountInput.value);
-                        totalCost += price * count;
-                    });
-                    document.getElementById('totalCost').textContent = 'LKR ' + totalCost.toFixed(2);
-                    document.getElementById('hiddenTotal').value = totalCost.toFixed(2);
-                    console.log(totalCost.toFixed(2));
-                }
-
-                function updateCart(productId, quantityChange, cartId, itemId, type) {
-                    // Construct the URL using template literals directly in the fetch call
-                    const update_url = "/cartUpdate?productId=" + productId + "&cartId=" + cartId + "&quantityChange=" + quantityChange;
-                    const delete_url = "/cartUpdate?itemID=" + itemId;
-                    if (type === "update") {
-                        console.log("Request URL:", update_url);
-                        // Using Fetch API to make a GET request
-                        fetch(update_url, {
-                            method: 'PUT'
-                        })
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Network response was not ok ' + response.statusText);
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    console.log('Response:', data);
-                                })
-                                .catch(error => {
-                                    console.error('Failed to update cart:', error);
-                                });
-                    } else if (type === "delete") {
-                        console.log("Request URL:", delete_url);
-                        fetch(delete_url, {
-                            method: 'DELETE'
-                        }).then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok ' + response.statusText);
-                            }
-                            return response.json();
-                        }).then(data => {
-                            console.log('Response:', data);
-                        }).catch(error => {
-                            console.error('Failed to update cart:', error);
-                        });
-                    }
-                }
-
-
-                function attachEventListeners() {
-                    document.querySelectorAll('.btn-increment').forEach(button => {
-                        button.removeEventListener('click', handleIncrement); // Remove existing event listener to prevent duplicates
-                        button.addEventListener('click', handleIncrement);
-                    });
-                    document.querySelectorAll('.btn-decrement').forEach(button => {
-                        button.removeEventListener('click', handleDecrement); // Remove existing event listener to prevent duplicates
-                        button.addEventListener('click', handleDecrement);
-                    });
-                }
-
-                function handleIncrement(event) {
-                    const button = event.currentTarget;
-                    const input = button.parentElement.querySelector('.product-count');
-                    const productId = button.getAttribute('data-product-id');
-                    const cartId = button.getAttribute('data-cart-id');
-                    const itemId = button.getAttribute('data-item-id');
-                    let count = parseInt(input.value);
-                    count++;
-                    input.value = count;
-                    updateTotalCost();
-                    updateCart(productId, 1, cartId, itemId, "update"); // Call updateCart function with +1
-                }
-                function handleDecrement(event) {
-                    const button = event.currentTarget;
-                    const input = button.parentElement.querySelector('.product-count');
-                    const productId = button.getAttribute('data-product-id');
-                    const cartId = button.getAttribute('data-cart-id');
-                    const itemId = button.getAttribute('data-item-id');
-                    let count = parseInt(input.value);
-                    count--;
-                    input.value = count;
-                    if (count === 0) {
-                        // Delete item
-                        const index = cartItemsJS.findIndex(item => item.id === itemId);
-                        if (index !== -1) {
-                            cartItemsJS.splice(index, 1);
-                            createCartItemCards(cartItemsJS);
-                            updateCart(productId, -1, cartId, itemId, "delete");
-                            updateTotalCost();
-                        }
-                    } else {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', '/cartUpdate', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        cartItemsJS = JSON.parse(xhr.responseText);
+                        createCartItemCards();
                         updateTotalCost();
-                        updateCart(productId, -1, cartId, itemId, "update");
+                    } else if (xhr.readyState === 4) {
+                        console.error('Failed to fetch cart items:', xhr.status);
                     }
+                };
+                xhr.send();
+            }
+            window.fetchData = function () {
+                    getCartItems();
+                };
+            function createCartItemCards() {
+                const cartItemsContainer = document.querySelector('.cart-items');
+                cartItemsContainer.innerHTML = '';
+                if (cartItemsJS.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                } else {
+                    cartItemsJS.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'list-group-item d-flex justify-content-between align-items-center cart-item';
+                        card.innerHTML = `
+                            <div class="item-details w-100">
+                                <span class="product-name font-weight-bold">\${item.product}</span> -
+                                <span class="product-price">LKR \${item.price}</span>
+                            </div>
+                            <div class="input-group ml-5">
+                                <button class="btn btn-outline-secondary btn-decrement" type="button" data-item-id="\${item.id}" data-product-id="\${item.product_id}" data-cart-id="\${item.cart_id}">
+                                    <i class="bi bi-dash-circle"></i>
+                                </button>
+                                <input type="text" class="form-control product-count text-center" value="\${item.qty}" data-price="\${item.price}" readonly style="max-width: 60px;">
+                                <button class="btn btn-outline-secondary btn-increment" type="button" data-item-id="\${item.id}" data-product-id="\${item.product_id}" data-cart-id="\${item.cart_id}">
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
+                        `;
+                        cartItemsContainer.appendChild(card);
+                    });
                 }
-                updateTotalCost(); // Update total cost on page load
-            });
-        </script>
+                attachEventListeners();
+            }
+            
+            function updateTotalCost() {
+                let totalCost = 0;
+                document.querySelectorAll('.product-count').forEach(input => {
+                    totalCost += parseFloat(input.getAttribute('data-price')) * parseInt(input.value);
+                });
+                document.getElementById('totalCost').textContent = `LKR \${totalCost}`;
+            }
 
+            function updateCart(productId, quantityChange, cartId, itemId, type) {
+                const url = (type === "update") 
+                            ? `/cartUpdate?productId=\${productId}&cartId=\${cartId}&quantityChange=\${quantityChange}` 
+                            : `/cartUpdate?itemID=\${itemId}`;
+                fetch(url, {
+                    method: type === "update" ? 'PUT' : 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response:', data);
+                    getCartItems(); // Refresh cart items
+                    updateTotalCost(); // Update cost display
+                })
+                .catch(error => {
+                    console.error('Failed to update cart:', error);
+                });
+            }
+
+            function attachEventListeners() {
+                document.querySelectorAll('.btn-increment').forEach(button => {
+                    button.removeEventListener('click', handleIncrement); // Prevent duplicate listeners
+                    button.addEventListener('click', handleIncrement);
+                });
+                document.querySelectorAll('.btn-decrement').forEach(button => {
+                    button.removeEventListener('click', handleDecrement); // Prevent duplicate listeners
+                    button.addEventListener('click', handleDecrement);
+                });
+            }
+
+            function handleIncrement(event) {
+                const button = event.currentTarget;
+                const input = button.parentElement.querySelector('.product-count');
+                const productId = button.getAttribute('data-product-id');
+                const cartId = button.getAttribute('data-cart-id');
+                const itemId = button.getAttribute('data-item-id');
+                let count = parseInt(input.value);
+                count++;
+                input.value = count;
+                updateCart(productId, 1, cartId, itemId, "update");
+            }
+
+            function handleDecrement(event) {
+                const button = event.currentTarget;
+                const input = button.parentElement.querySelector('.product-count');
+                const productId = button.getAttribute('data-product-id');
+                const cartId = button.getAttribute('data-cart-id');
+                const itemId = button.getAttribute('data-item-id');
+                let count = parseInt(input.value);
+                count--;
+                input.value = count;
+                if (count === 0) {
+                    // Delete item
+                    updateCart(productId, -1, cartId, itemId, "delete");
+                } else {
+                    updateCart(productId, -1, cartId, itemId, "update");
+                }
+            }
+
+            getCartItems();
+        });
+    </script>
     </body>
 </html>

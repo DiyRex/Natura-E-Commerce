@@ -86,7 +86,7 @@
                     </ul>
                 </li>
                 <li class="nav-item d-flex flex-row justify-content-start align-items-center">
-                    <button class="nav-link btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="btncheck()">
+                    <button class="nav-link btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="window.fetchData()">
                     <i class="bi h3 text-white bi-cart"></i>
                 </button>
                     
