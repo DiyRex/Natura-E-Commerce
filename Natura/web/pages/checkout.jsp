@@ -51,8 +51,8 @@
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="radio" name="addressOption" id="defaultAddress" value="default" checked aria-label="Default address">
                                 </div>
-                                <textarea class="form-control" aria-label="Default address" disabled style="height: 150px;">
-<%= session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"%>
+                                <textarea id="defaddr" class="form-control" aria-label="Default address" disabled style="height: 150px;">
+                                    <%= session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"%>
                                 </textarea>
 
                             </div>
@@ -192,7 +192,38 @@
                                     document.querySelector('.card-details').style.display = !this.checked ? 'block' : 'none';
                                 });
                             });
-                            
+
+                            function sendOrderDetails(userId,totalCost,shippingAddress,paymentMethod, cartId) {
+                                const postData = {
+                                    userId: userId,
+                                    totalCost: totalCost,
+                                    shippingAddress: shippingAddress,
+                                    paymentMethod: paymentMethod,
+                                    cartId:cartId
+                                };
+
+                                console.log("Sending order details:");
+                                console.log("User ID:", postData.userId);
+                                console.log("Total Cost:", postData.totalCost);
+                                console.log("Shipping Address:", postData.shippingAddress);
+                                console.log("Payment Method:", postData.paymentMethod);
+                                console.log("Cart ID:", postData.cartId);
+
+                                $.ajax({
+                                    url: '/createOrder',
+                                    type: 'POST',
+                                    data: postData,
+                                    success: function (response) {
+                                        console.log("Response received:", response);
+                                        console.log("Order processed successfully.");
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('Failed to process order:', status, error);
+                                    }
+                                });
+                            };
+
+
 
                             function validateCheckboxes() {
                                 var termsChecked = document.getElementById('termsCheckbox').checked;
@@ -203,10 +234,36 @@
                                     errorDiv.style.visibility = 'visible'; // Show the error message
                                 } else {
                                     errorDiv.style.visibility = 'hidden'; // Hide the error message
-                                    // Proceed with form submission or other logic
-                                    alert('Form is valid, submitting...'); // Placeholder for form submission
+                                    const userId = "<%=(String) session.getAttribute("userID")%>";
+                                    const cartId = "<%=(String) session.getAttribute("cartID")%>";
+                                    const total_cost = "<%= totalStr%>";
+                                    var shipping_address = "";
+                                    var payment = "";
+                                    if (document.getElementById('cashOnDelivery').checked) {
+                                        payment = "cash";
+
+                                    } else if (document.getElementById('cardPayment').checked) {
+                                        payment = "card";
+                                    }
+                                    if (document.getElementById('defaultAddress').checked) {
+                                        shipping_address = document.getElementById("defaddr").innerHTML.trim();
+
+                                    } else if (document.getElementById('newAddress').checked) {
+                                        let name = '<%=session.getAttribute("userName")%>';
+                                        let aptNo = document.getElementById('manualApartmentNo') ? document.getElementById('manualApartmentNo').value : '';
+                                        let street = document.getElementById('manualStreet') ? document.getElementById('manualStreet').value : '';
+                                        let city = document.getElementById('manualCity') ? document.getElementById('manualCity').value : '';
+                                        let state = document.getElementById('manualState') ? document.getElementById('manualState').value : '';
+                                        let zipCode = document.getElementById('manualZipCode') ? document.getElementById('manualZipCode').value : '';
+
+                                        shipping_address = `\${name}\n\${aptNo},\n\${street},\n\${city},\n\${state},\n\${zipCode}`;
+
+                                    }
+                                    sendOrderDetails(userId,total_cost,shipping_address,payment,cartId);
                                 }
                             }
+
         </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </body>
 </html>

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Cart;
 import utility.DBConnection;
 
@@ -139,6 +141,29 @@ public class CartDAOImpl implements CartDAO {
             }
             if (conn != null) {
                 conn.close();
+            }
+        }
+    }
+
+    @Override
+    public void clearCart(int cart_id) throws Exception {
+        String sql = "DELETE FROM cart_items WHERE Cart_ID = ?";
+        Connection conn = null;
+        try {
+            conn = DBConnection.getConnection();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, cart_id);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

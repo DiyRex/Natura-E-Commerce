@@ -2,9 +2,9 @@
 <%@page import="java.util.List"%>
 <%@page import="dao.CartDAOImpl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%
     // Assuming the user's ID is stored in the session
-
     String userId = (String) session.getAttribute("userID");
 
     CartDAOImpl cartDao = new CartDAOImpl();
@@ -25,6 +25,7 @@
         }
     }
 %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -117,7 +118,6 @@
         </style>
     </head>
     <body>
-
         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" style="visibility: visible;" aria-labelledby="cartOffcanvasLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="cartOffcanvasLabel">Shopping Cart</h5>
@@ -139,7 +139,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -182,7 +181,7 @@
                 } else {
                     cartItemsJS.forEach(item => {
                         const card = document.createElement('div');
-                        card.className = 'list-group-item d-flex justify-content-between align-items-center cart-item';
+                        card.className = 'border shadow-sm rounded list-group-item d-flex justify-content-between align-items-center cart-item';
                         card.innerHTML = `
                             <div class="item-details w-100">
                                 <span class="product-name font-weight-bold">\${item.product}</span> -
@@ -275,7 +274,6 @@
                     updateCart(productId, -1, cartId, itemId, "update");
                 }
             }
-
             getCartItems();
         });
     </script>

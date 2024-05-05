@@ -16,6 +16,7 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
             />
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <title>Store</title>
         <style>
             .fit-image {
@@ -35,16 +36,17 @@
             <div class="mt-4">
                 <h1 class="text-center h2 fw-bold mt-5">Products Store</h1>
             </div>
-            <div class="row mt-5">
+            <div class="row mt-5" >
                 <!-- Start Card -->
                 <%-- Retrieve the product list from request scope --%>
                 <% List<Product> products = (List<Product>) request.getAttribute("products");
                     if (products != null) {
                         for (Product product : products) {
                 %>
-                <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
-                    <div class="card shadow" style="width: 18rem; height: 25rem">
-                        <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height:50%;" alt="<%= product.getTitle()%> Image" />
+                <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center"  data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom">
+                    <div class="card shadow" style="width: 18rem; height: 25rem;  transform: scale(0.9); transform-origin: center;">
+                        <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height:50%;  transform: scale(0.7); transform-origin: center;" alt="<%= product.getTitle()%> Image" />
                         <div class="card-body text-center">
                             <h5 class="card-title fw-bold text-center h3"><%= product.getTitle()%></h5>
                             <p class="card-text text-center"><small>(100g)</small></p>
@@ -69,6 +71,10 @@
             <%@ include file="../components/footer.jsp" %>
         </div>
         <!-- Script -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
         <script>
             // add product to cart
 

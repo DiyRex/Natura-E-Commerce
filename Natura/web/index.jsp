@@ -79,11 +79,11 @@
                         </h1>
                         <div class="d-flex flex-column btn-container">
 
-                            <button
+                            <a type="button" href="/products"
                                 class="btn btn-lg rounded-pill btn-success p-2 px-4 mt-5 btn-animate"
                                 >
                                 Shop Now
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div

@@ -10,4 +10,5 @@ public interface CartDAO {
     List<Cart> getCartProducts(String user_id) throws Exception;
     void deleteItem(int id) throws Exception;
     void addOrUpdate(int productId, int cartId, int newQuantity) throws Exception;
+    void clearCart(int cart_id) throws Exception;
 }
