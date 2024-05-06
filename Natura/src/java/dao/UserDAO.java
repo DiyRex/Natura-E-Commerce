@@ -12,5 +12,5 @@ public interface UserDAO {
     List<User> getAllUsers() throws Exception;
     void updateUser(User user) throws Exception;
     void deleteUser(int id) throws Exception;
-    User loginUser(String email, String password) throws Exception;
+    User loginUser(String email, String password) throws Exception;  
 }

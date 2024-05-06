@@ -1,6 +1,7 @@
 package dao;
 
 import models.User;
+import models.Admin;
 import utility.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -180,4 +181,5 @@ public class UserDAOImpl implements UserDAO {
         }
         return user;
     }
+
 }

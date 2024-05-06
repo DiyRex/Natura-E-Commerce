@@ -63,6 +63,10 @@
         <servlet-name>searchProductServlet</servlet-name>
         <servlet-class>clientController.searchProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminLoginServlet</servlet-name>
+        <servlet-class>adminController.adminLoginServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -118,6 +122,10 @@
     <servlet-mapping>
         <servlet-name>searchProductServlet</servlet-name>
         <url-pattern>/searchProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminLoginServlet</servlet-name>
+        <url-pattern>/adminLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

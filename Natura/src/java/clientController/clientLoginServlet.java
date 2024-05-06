@@ -29,18 +29,19 @@ public class clientLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Retrieve email and password from the request
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        // Create an instance of the DAO to interact with the database
-        UserDAO userDAO = new UserDAOImpl();
         String userName = "Guest";
         String userID = null;
         String cartID = null;
         String addressLine = "";
+        
+        // Retrieve email and password from the req
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        UserDAO userDAO = new UserDAOImpl();
+        
         try {
-            // Attempt to authenticate the user with the provided credentials
+            
             User user = userDAO.loginUser(email, password);
 
             if (user != null) {
@@ -66,8 +67,7 @@ public class clientLoginServlet extends HttpServlet {
                 session.setAttribute("cartID", cartID);
                 session.setAttribute("addressLine", addressLine);
 
-                // Redirect to the index page or dashboard
-                response.sendRedirect("index.jsp"); // Using redirect to avoid form resubmission issues
+                response.sendRedirect("index.jsp"); 
             } else {
                 // User not found or invalid login, handle as login failure
                 request.setAttribute("errorMessage", "Invalid email or password");
