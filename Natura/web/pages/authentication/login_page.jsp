@@ -30,9 +30,8 @@
             }
             .login-form {
                 width: 100%;
-                height: 600px;
-                max-width: 330px; /* Maximum width of the form */
-                padding: 15px;
+                max-width: 360px; /* Maximum width of the form */
+                padding: 45px;
                 margin: auto;
             }
             .form-control {
@@ -61,10 +60,10 @@
     </head>
     <body>
         <%@ include file="../../components/navbar.jsp" %>
-        <div class="login-form">
-            <div  class="text-center mb-5" >
+        <div class="login-form shadow-lg align-items-center">
+<!--            <div  class="text-center mb-5" >
                 <img src="../../images/natura_web.png" class="logo-img" alt="alt"/>
-            </div>
+            </div>-->
             <form action="/login" method="post">
                 <h1 class="h2 mb-3 fw-normal text-center">Login</h1>
                 <div class="form-group">
@@ -75,7 +74,7 @@
                     <label for="inputPassword" class="visually-hidden">Password</label>
                     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 </div>
-                <div class="text-center">
+                <div class="text-center row px-3">
                     <button class="btn btn-lg btn-primary btn-block mt-4 login-button" type="submit">Login</button>
                 </div>
                 <!-- Sign up link -->

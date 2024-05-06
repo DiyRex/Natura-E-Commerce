@@ -275,7 +275,6 @@ public class ProductDAOImpl implements ProductDAO {
                                     resultSet.getInt("Qty"),
                                     resultSet.getString("Image_Path")
                             );
-                            System.out.println("title:" + resultSet.getString("Title"));
                             products.add(product);
                         }
                     }

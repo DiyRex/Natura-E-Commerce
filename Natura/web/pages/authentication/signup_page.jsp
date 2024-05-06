@@ -19,15 +19,17 @@
             }
             body {
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 padding: 10px;
             }
             .signup-form {
                 width: 100%;
-                max-width: 450px;
+                max-width: 500px;
                 padding: 15px;
                 margin: auto;
+                margin-bottom: 10%;
                 background: white;
                 border-radius: 8px;
             }
@@ -38,21 +40,21 @@
                 font-size: 16px;
             }
             .logo-img{
-                width: 50%;
+                width: 40%;
             }
             @media (min-width: 400px) and (max-width: 767.98px) {
                 .logo-img{
-                    width: 40%;
+                    width: 30%;
                 }
             }
         </style>
     </head>
-    <body>
+    <body class="mt-5 mb-5">
         <%@ include file="../../components/navbar.jsp" %>
-        <div class="signup-form">
-            <div  class="text-center mb-5" >
+        <div class="signup-form mb-5 shadow-lg">
+<!--            <div  class="text-center mb-5" >
                 <img src="../../images/natura_web.png" class="logo-img" alt="alt"/>
-            </div>
+            </div>-->
             <form action="/signup" method="post">
                 <h1 class="h3 mb-3 fw-normal text-center">Sign Up</h1>
                 <div class="mb-3">
@@ -103,7 +105,7 @@
                 <p>Already have an account? <a href="/login">Login</a></p>
             </div>
         </div>
-
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

@@ -70,7 +70,7 @@
 
             <!-- Search form -->
             <form class="d-flex input-group w-auto px-5 px-md-0 position-relative" action="/searchProduct" method="GET">
-                <input type="text" name="searchKey" class="form-control rounded-pill pt-2" placeholder="Search.." aria-label="Search" style="padding-right: 3rem;">
+                <input type="text" name="searchKey" class="form-control rounded-pill pt-2" placeholder="Search.." aria-label="Search" style="padding-right: 3rem;" required>
                 <button class="btn btn-success rounded-circle position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); z-index: 100;" type="submit">
                     <i class="bi bi-search text-white"></i>
                 </button>
@@ -83,7 +83,7 @@
                 <li class="nav-item dropdown d-flex flex-row justify-content-start align-items-center">
                     <button class="btn nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="h3 pt-2 text-white  fas fa-bell"></i>
+                        <i class="h3 px-md-1 pt-2 text-white  fas fa-bell"></i>
                     </button>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end notifications-list p-1" aria-labelledby="navbarDropdown">
@@ -103,10 +103,10 @@
                  
                 <!-- User Profile Section -->
                 <li class="nav-item dropdown">
-                    <button class="btn nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
+                    <button class="btn py-2 nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(2).jpg" class="rounded-circle img-fluid"
-                             height='35' width='35'>
+                             height='40' width='40'>
                     </button>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarProfileDropdown">
