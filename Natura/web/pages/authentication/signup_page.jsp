@@ -11,43 +11,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Natura Signup</title>
+        <link href="../../css/signup_page.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            html, body {
-                height: 100%;
-                background-color: #f7f7f7;
-            }
-            body {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 10px;
-            }
-            .signup-form {
-                width: 100%;
-                max-width: 500px;
-                padding: 15px;
-                margin: auto;
-                margin-bottom: 10%;
-                background: white;
-                border-radius: 8px;
-            }
-            .form-control {
-                position: relative;
-                height: auto;
-                padding: 10px;
-                font-size: 16px;
-            }
-            .logo-img{
-                width: 40%;
-            }
-            @media (min-width: 400px) and (max-width: 767.98px) {
-                .logo-img{
-                    width: 30%;
-                }
-            }
-        </style>
+       
     </head>
     <body class="mt-5 mb-5">
         <%@ include file="../../components/navbar.jsp" %>

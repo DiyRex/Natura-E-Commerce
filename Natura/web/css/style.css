@@ -1,63 +1,56 @@
 /* styles.css */
 
-/* Style for navigation links */
+
 .navbar-nav .nav-link {
     font-size: 18px;
     color: black !important;
 }
 
-/* Style for login/signup button */
+
 .login-btn {
     color: #000;
     border-radius: 29.5px;
-    padding: 0px 0px; /* Adjust padding to reduce button size */
-    font-size: 18px; /* Optionally, adjust font size */
+    padding: 0px 0px;
+    font-size: 18px;
 }
 
-/* Style for navbar background color */
 .navbar {
     background-color: #79FF6D;
 }
 
-/* Center the navbar brand */
 .navbar-brand {
     margin-right: 0;
 }
 
-/* Style for navbar toggler icon color */
 .custom-toggler .navbar-toggler-icon {
     color: black;
 }
 
-
-/* Adjust the image resolution */
 .custom-image {
     width: 100%;
     height: auto;
 }
 
-/* Adjust the container for the image */
 .custom-image-container {
     padding-left: 0;
     padding-right: 0;
 }
 
-/* Text overlay */
 .text-overlay {
     position: absolute;
     top: 50%;
     left: 10%;
     transform: translate(-50%, -50%);
     text-align: left;
-    line-height: 1.5; /* Adjust line height for better spacing */
-    font-family: 'Roboto', sans-serif; /* Change font family to Roboto */
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
 }
 
 .text-overlay h2 {
-    font-size: 48px; /* Increased font size */
+    font-size: 48px;
     font-weight: bold;
-    margin-bottom: 10px; /* Add margin bottom for spacing */
-    font-family: 'Roboto', sans-serif; /* Change font family to Roboto */
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
 }
 
 

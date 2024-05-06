@@ -11,52 +11,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Natura Login</title>
+        <link href="../../css/login_page.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
             />
 
-        <style>
-            html, body {
-                height: 100%; /* Ensure the full height of the window */
-            }
-            body {
-                display: flex;
-                align-items: center; /* Align vertically center */
-                justify-content: center; /* Align horizontally center */
-                padding: 10px;
-                background-color: #f7f7f7; /* Light grey background */
-            }
-            .login-form {
-                width: 100%;
-                max-width: 360px; /* Maximum width of the form */
-                padding: 45px;
-                margin: auto;
-            }
-            .form-control {
-                position: relative;
-                box-sizing: border-box;
-                height: auto;
-                padding: 10px;
-                font-size: 16px;
-            }
-            .form-control:focus {
-                z-index: 2; /* Highlight focus */
-            }
-            .login-button {
-                background-color: #007bff; /* Bootstrap primary color */
-                border-color: #007bff;
-            }
-            .logo-img{
-                width: 40%;
-            }
-            @media (min-width: 400px) and (max-width: 767.98px) {
-                .logo-img{
-                    width: 30%;
-                }
-            }
-        </style>
+        
     </head>
     <body>
         <%@ include file="../../components/navbar.jsp" %>

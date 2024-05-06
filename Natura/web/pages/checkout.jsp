@@ -11,29 +11,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/checkout.css" rel="stylesheet">
         <title>Checkout Page</title>
-        <style>
-            .address-details {
-                display: none; /* Initially hide the manual address fields */
-            }
-            .fixed-bottom {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                /*          margin: 20px 20% 20px 20%;*/
-                padding-bottom: 50px;
-            }
-            .title-margin{
-                margin-top: 8rem;
-            }
-            #checkboxError {
-                color: red;
-                height: 20px;
-                visibility: hidden;
-                margin-top: 10px;
-            }
-        </style>
+        
     </head>
     <body>
         <%@ include file="../components/navbar.jsp" %>

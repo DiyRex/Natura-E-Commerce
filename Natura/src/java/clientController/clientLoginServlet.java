@@ -67,7 +67,7 @@ public class clientLoginServlet extends HttpServlet {
                 session.setAttribute("cartID", cartID);
                 session.setAttribute("addressLine", addressLine);
 
-                response.sendRedirect("index.jsp"); 
+                response.sendRedirect("/"); 
             } else {
                 // User not found or invalid login, handle as login failure
                 request.setAttribute("errorMessage", "Invalid email or password");

@@ -1,0 +1,20 @@
+.address-details {
+    display: none;
+}
+.fixed-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+   
+    padding-bottom: 50px;
+}
+.title-margin{
+    margin-top: 8rem;
+}
+#checkboxError {
+    color: red;
+    height: 20px;
+    visibility: hidden;
+    margin-top: 10px;
+}
