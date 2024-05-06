@@ -14,13 +14,15 @@ import javax.servlet.http.HttpSession;
  */
 public class clientLogoutServlet extends HttpServlet {
 
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("user", null);
-        session.setAttribute("userName","Guest");
+        session.setAttribute("userName", "Guest");
+        session.setAttribute("userID", null);
+        session.setAttribute("cartID", null);
+        session.setAttribute("addressLine", null);
         request.getRequestDispatcher("/login").forward(request, response);
     }
 }

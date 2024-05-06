@@ -24,40 +24,6 @@
         <title>Natura</title>
     </head>
     <body>
-        <%
-            // Initialize the username as "Guest" by default
-            String userName = "Guest";
-            String userID = null;
-            String cartID = null;
-            String addressLine = "";
-
-            // Retrieve the user object from the session if it exists
-            User user = (session != null) ? (User) session.getAttribute("user") : null;
-
-            // If a user object was found, update the userName with the user's name
-            if (user != null) {
-                userName = user.getName();
-                userID = String.valueOf(user.getId());
-                cartID = String.valueOf(user.getCartId());
-                System.out.println("cart id is " + cartID);
-                // Build the address string, checking for nulls to avoid "null" in the output
-                addressLine = userName + " \n"
-                        + (user.getApt_no() != null ? user.getApt_no() : "") + " \n"
-                        + (user.getStreet() != null ? user.getStreet() : "") + " \n"
-                        + (user.getCity() != null ? user.getCity() : "") + " \n"
-                        + (user.getState() != null ? user.getState() : "") + " \n"
-                        + (user.getZip_code() != null ? user.getZip_code() : "");
-            } else {
-                response.sendRedirect("/login");
-                return;
-            }
-            session.setAttribute("userName", userName);
-            session.setAttribute("userID", userID);
-            session.setAttribute("cartID", cartID);
-            session.setAttribute("addressLine", addressLine);
-        %>
-
-
         <%@ include file="./components/navbar.jsp" %>
 
 

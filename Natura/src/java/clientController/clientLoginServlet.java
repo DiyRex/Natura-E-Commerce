@@ -35,7 +35,10 @@ public class clientLoginServlet extends HttpServlet {
 
         // Create an instance of the DAO to interact with the database
         UserDAO userDAO = new UserDAOImpl();
-
+        String userName = "Guest";
+        String userID = null;
+        String cartID = null;
+        String addressLine = "";
         try {
             // Attempt to authenticate the user with the provided credentials
             User user = userDAO.loginUser(email, password);
@@ -43,7 +46,25 @@ public class clientLoginServlet extends HttpServlet {
             if (user != null) {
                 // User is found, add user to session
                 HttpSession session = request.getSession();
-                session.setAttribute("user", user);  // Store the user object in the session
+                session.setAttribute("user", user);
+                
+
+                userName = user.getName();
+                userID = String.valueOf(user.getId());
+                cartID = String.valueOf(user.getCartId());
+                System.out.println("cart id is " + cartID);
+                // Build the address string, checking for nulls to avoid "null" in the output
+                addressLine = userName + " \n"
+                        + (user.getApt_no() != null ? user.getApt_no() : "") + " \n"
+                        + (user.getStreet() != null ? user.getStreet() : "") + " \n"
+                        + (user.getCity() != null ? user.getCity() : "") + " \n"
+                        + (user.getState() != null ? user.getState() : "") + " \n"
+                        + (user.getZip_code() != null ? user.getZip_code() : "");
+                
+                session.setAttribute("userName", userName);
+                session.setAttribute("userID", userID);
+                session.setAttribute("cartID", cartID);
+                session.setAttribute("addressLine", addressLine);
 
                 // Redirect to the index page or dashboard
                 response.sendRedirect("index.jsp"); // Using redirect to avoid form resubmission issues

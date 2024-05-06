@@ -65,7 +65,7 @@
                 <img src="../../images/natura_web.png" class="logo-img" alt="alt"/>
             </div>-->
             <form action="/login" method="post">
-                <h1 class="h2 mb-3 fw-normal text-center">Login</h1>
+                <h1 class="h2 mb-5 fw-normal text-center">Login</h1>
                 <div class="form-group">
                     <label for="inputEmail" class="visually-hidden">Email address</label>
                     <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
