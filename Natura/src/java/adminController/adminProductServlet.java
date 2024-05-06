@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -19,16 +20,24 @@ import java.util.logging.Logger;
  */
 public class adminProductServlet extends HttpServlet {
 
-
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       ProductDAO productDAO = new ProductDAOImpl();
+        ProductDAO productDAO = new ProductDAOImpl();
         try {
             List<Product> allProducts = productDAO.getAllProducts();
-            request.setAttribute("products", allProducts);  // Set the products in the request scope
-            request.getRequestDispatcher("/pages/admin/products.jsp").forward(request, response);
+            request.setAttribute("products", allProducts);
+            HttpSession session = request.getSession();
+            if (session != null) {
+                Boolean isAdminLogged = (Boolean) session.getAttribute("isAdminLogged");
+                if (isAdminLogged != null && isAdminLogged) {
+                    request.getRequestDispatcher("/pages/admin/products.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("/adminLogin");
+                }
+
+            }
+
         } catch (SQLException e) {
             throw new ServletException("Error retrieving products", e);
         } catch (Exception ex) {

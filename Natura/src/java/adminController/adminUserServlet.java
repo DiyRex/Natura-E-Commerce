@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,9 +24,19 @@ public class adminUserServlet extends HttpServlet {
         UserDAO userDAO = new UserDAOImpl();
 
         try {
-            List<User> allUsers = userDAO.getAllUsers(); // Fetch all users
-            request.setAttribute("users", allUsers); // Set the users in the request scope
-            request.getRequestDispatcher("/pages/admin/users.jsp").forward(request, response);
+            List<User> allUsers = userDAO.getAllUsers();
+            request.setAttribute("users", allUsers);
+            HttpSession session = request.getSession();
+            if (session != null) {
+                Boolean isAdminLogged = (Boolean) session.getAttribute("isAdminLogged");
+                if (isAdminLogged != null && isAdminLogged) {
+                    request.getRequestDispatcher("/pages/admin/users.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("/adminLogin");
+                }
+
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();  // Print stack trace to server console/log
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error retrieving users");
@@ -35,11 +46,10 @@ public class adminUserServlet extends HttpServlet {
         }
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
 }

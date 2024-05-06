@@ -1,10 +1,12 @@
 package adminController;
 
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,7 +20,17 @@ public class adminOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            request.getRequestDispatcher("/pages/admin/orders.jsp").forward(request, response);
+             HttpSession session = request.getSession();
+        if (session != null) {
+            Boolean isAdminLogged = (Boolean) session.getAttribute("isAdminLogged");
+            if (isAdminLogged != null && isAdminLogged) {
+                request.getRequestDispatcher("/pages/admin/orders.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("/adminLogin");
+            }
+
+        }
+            
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to render the order page.");
