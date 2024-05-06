@@ -44,7 +44,7 @@
                         for (Product product : products) {
                 %>
                 <div class="col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center"  data-aos="fade-up"
-     data-aos-anchor-placement="top-bottom">
+                     data-aos-anchor-placement="top-bottom">
                     <div class="card shadow" style="width: 18rem; height: 25rem;  transform: scale(0.9); transform-origin: center;">
                         <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height:50%;  transform: scale(0.7); transform-origin: center;" alt="<%= product.getTitle()%> Image" />
                         <div class="card-body text-center">
@@ -80,10 +80,10 @@
 
             document.querySelectorAll(".addcartbtn").forEach(button => {
                 button.addEventListener('click', function () {
+
                     const userId = "<%=(String) session.getAttribute("userID")%>";
                     const cartId = "<%=(String) session.getAttribute("cartID")%>";
                     var productId = button.getAttribute("data-product-id");
-                    
                     // URL-encoded form data
                     const formData = new URLSearchParams();
                     formData.append('productId', productId);
@@ -107,6 +107,7 @@
                             })
                             .catch(error => {
                                 console.error('Failed to add to cart:', error);
+                                window.location.href = '/login';
                             });
                 });
             });

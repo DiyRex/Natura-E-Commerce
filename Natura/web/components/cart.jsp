@@ -130,7 +130,8 @@
                 <div class="total-cost-container">
                     <div class="d-flex justify-content-between align-items-center total-cost">
                         <h5>Total Cost:</h5>
-                        <span id="totalCost">LKR <%= totalCost%></span>
+                        <span id="total
+                              Cost">LKR <%= totalCost%></span>
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <form action="/checkout" method="get">

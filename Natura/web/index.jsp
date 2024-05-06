@@ -48,7 +48,7 @@
                         + (user.getState() != null ? user.getState() : "") + " \n"
                         + (user.getZip_code() != null ? user.getZip_code() : "");
             } else {
-                response.sendRedirect("/login"); // Redirects to a login page
+                response.sendRedirect("/login");
                 return;
             }
             session.setAttribute("userName", userName);

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%String username = (String) session.getAttribute("userName");%>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
      <link
@@ -51,13 +52,16 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left links -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5 px-md-0">
+                <hr class="dropdown-divider d-md-none">
                 <li class="nav-item">
                     <a class="nav-link" href="/"><span class="h5">Home</span></a>
                 </li>
+                <hr class="dropdown-divider d-md-none">
                 <li class="nav-item">
                     <a class="nav-link" href="/products"><span class="h5">Store</span></a>
                 </li>
+                <hr class="dropdown-divider d-md-none">
                 <li class="nav-item">
                     <a class="nav-link" href="/about"><span class="h5">About Us</span></a>
                 </li>
@@ -65,15 +69,16 @@
             <!-- Left links -->
 
             <!-- Search form -->
-            <form class="d-flex input-group w-auto">
-                <input type="search" class="form-control" placeholder="Search.." aria-label="Search" />
-                <button class="btn btn-outline-none" type="button" data-mdb-ripple-color="dark" style="padding: .45rem 1.5rem .35rem;">
-                    <i class="text-white h5 bi bi-search"></i>
+            <form class="d-flex input-group w-auto px-5 px-md-0 position-relative">
+                <input type="text" class="form-control rounded-pill pt-2" placeholder="Search.." aria-label="Search" style="padding-right: 3rem;">
+                <button class="btn btn-success rounded-circle position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); z-index: 100;" type="button">
+                    <i class="bi bi-search text-white"></i>
                 </button>
             </form>
 
-            <!-- Right links -->
-            <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+
+            <!-- Right Nav links -->
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-start justify-content-start px-5 px-md-0">
                 <!-- Notifications Dropdown -->
                 <li class="nav-item dropdown d-flex flex-row justify-content-start align-items-center">
                     <button class="btn nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
@@ -85,14 +90,18 @@
                         <!-- Notification items here -->
                     </ul>
                 </li>
+                <!-- Cart Button -->
+                <%
+                            if (username != null && !username.trim().equals("Guest")) {
+                        %>
                 <li class="nav-item d-flex flex-row justify-content-start align-items-center">
                     <button class="nav-link btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="window.fetchData()">
                     <i class="bi h3 text-white bi-cart"></i>
                 </button>
-                    
                 </li>
-                
-                <!-- User Profile Dropdown -->
+                 <%}%>
+                 
+                <!-- User Profile Section -->
                 <li class="nav-item dropdown">
                     <button class="btn nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
@@ -106,14 +115,11 @@
 
                         <li><a class="dropdown-item" href="#"><%= session.getAttribute("userName") != null ? (String) session.getAttribute("userName") : "Guest"%></a></li>
 
-                        <!-- Divider (optional) -->
+                        <!-- Divider -->
                         <li><hr class="dropdown-divider"></li>
-
+                        
+                        <!-- Profile Dropdown Items -->
                         <%
-                            // Safely retrieve the userName attribute from the session
-                            String username = (String) session.getAttribute("userName");
-
-                            // Check if userName is "Guest" or null, show Login; otherwise, show Logout
                             if (username == null || username.equals("Guest")) {
                         %>
                         <li><a class="dropdown-item" href="/login">Login</a></li>
