@@ -69,9 +69,9 @@
             <!-- Left links -->
 
             <!-- Search form -->
-            <form class="d-flex input-group w-auto px-5 px-md-0 position-relative">
-                <input type="text" class="form-control rounded-pill pt-2" placeholder="Search.." aria-label="Search" style="padding-right: 3rem;">
-                <button class="btn btn-success rounded-circle position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); z-index: 100;" type="button">
+            <form class="d-flex input-group w-auto px-5 px-md-0 position-relative" action="/searchProduct" method="GET">
+                <input type="text" name="searchKey" class="form-control rounded-pill pt-2" placeholder="Search.." aria-label="Search" style="padding-right: 3rem;">
+                <button class="btn btn-success rounded-circle position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); z-index: 100;" type="submit">
                     <i class="bi bi-search text-white"></i>
                 </button>
             </form>

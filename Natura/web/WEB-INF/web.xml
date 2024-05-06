@@ -59,6 +59,10 @@
         <servlet-name>createOrderServlet</servlet-name>
         <servlet-class>clientController.createOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>searchProductServlet</servlet-name>
+        <servlet-class>clientController.searchProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -110,6 +114,10 @@
     <servlet-mapping>
         <servlet-name>createOrderServlet</servlet-name>
         <url-pattern>/createOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchProductServlet</servlet-name>
+        <url-pattern>/searchProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

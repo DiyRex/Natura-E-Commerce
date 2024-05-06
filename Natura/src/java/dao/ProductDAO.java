@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 public interface ProductDAO {
     Product getProduct(int id) throws Exception;
     List<Product> getAllProducts() throws Exception;
+    List<Product> getAllProductsByKey(String searchKey) throws Exception;
     List<Product> getAllProductsWithImage() throws Exception;
     List<Product> getHotItems() throws Exception;
     List<Product> getBestDeals() throws Exception;
