@@ -71,6 +71,10 @@
         <servlet-name>adminLogoutServlet</servlet-name>
         <servlet-class>adminController.adminLogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>clientOrderServlet</servlet-name>
+        <servlet-class>clientController.clientOrderServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -134,6 +138,10 @@
     <servlet-mapping>
         <servlet-name>adminLogoutServlet</servlet-name>
         <url-pattern>/adminLogout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>clientOrderServlet</servlet-name>
+        <url-pattern>/myOrders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

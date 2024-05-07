@@ -126,6 +126,11 @@
                             <%
                             } else {
                             %>
+                        <li><a class="dropdown-item" href="/myOrders">My orders</a></li>
+
+                        <!-- Divider -->
+                        <li><hr class="dropdown-divider"></li>
+                        
                         <!-- If the user is not "Guest" and hence logged in, show Logout -->
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                             <%

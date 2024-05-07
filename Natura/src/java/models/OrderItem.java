@@ -9,6 +9,7 @@ public class OrderItem {
     private int id;
     private int order_id;
     private int product_id;
+    private String product_name;
     private int qty;
     private int price;
     
@@ -23,6 +24,13 @@ public class OrderItem {
     public OrderItem(int order_id, int product_id, int qty, int price){
         this.order_id = order_id;
         this.product_id = product_id;
+        this.qty = qty;
+        this.price = price;
+    }
+    
+    public OrderItem(int order_id, String product_name, int qty, int price){
+        this.order_id = order_id;
+        this.product_name = product_name;
         this.qty = qty;
         this.price = price;
     }
@@ -96,5 +104,19 @@ public class OrderItem {
      */
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    /**
+     * @return the product_name
+     */
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    /**
+     * @param product_name the product_name to set
+     */
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
     }
 }

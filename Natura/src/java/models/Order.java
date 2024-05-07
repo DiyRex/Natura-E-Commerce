@@ -1,4 +1,6 @@
 package models;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,6 +15,7 @@ public class Order {
     private int total_cost;
     private String order_status;
     private String order_date;
+    private List<OrderItem> order_item;
 
     public Order(int id, int user_id, String shipping_Address, String payment, int total_cost, String order_status, String order_date) {
         this.id = id;
@@ -30,6 +33,21 @@ public class Order {
         this.payment = payment;
         this.total_cost =total_cost;
         this.order_status = order_status;
+    }
+    
+    public Order(int id, int user_id, String shipping_Address, String payment, int total_cost, String order_status, String orderd_date, List<OrderItem> order_items) {
+        this.id = id;
+        this.user_id = user_id;
+        this.shipping_Address = shipping_Address;
+        this.payment = payment;
+        this.total_cost =total_cost;
+        this.order_status = order_status;
+        this.order_date = orderd_date;
+        this.order_item = order_items;
+    }
+    
+    public void addOrderItem(OrderItem item) {
+        this.order_item.add(item);
     }
 
     /**
@@ -128,6 +146,20 @@ public class Order {
      */
     public void setShipping_Address(String shipping_Address) {
         this.shipping_Address = shipping_Address;
+    }
+
+    /**
+     * @return the order_item
+     */
+    public List<OrderItem> getOrder_item() {
+        return order_item;
+    }
+
+    /**
+     * @param order_item the order_item to set
+     */
+    public void setOrder_item(List<OrderItem> order_item) {
+        this.order_item = order_item;
     }
 
 }
