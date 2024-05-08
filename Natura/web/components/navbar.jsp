@@ -7,32 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%String username = (String) session.getAttribute("userName");%>
 <head>
+    <link rel="stylesheet" href="../css/navbar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-     <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-            />
-    <style>
-        .navbar-dark .nav-item .nav-link {
-            color: #fff;
-        }
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
 
-        .navbar-dark .nav-item .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            border-radius: 0.25rem;
-            color: #fff;
-        }
-
-        .fa-li {
-            position: relative;
-            left: 0;
-        }
-        
-    </style>
 </head>
 <div class="cart-container">
-<%@ include file="./cart.jsp" %>
+    <%@ include file="./cart.jsp" %>
 </div>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-success">
@@ -55,15 +39,15 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5 px-md-0">
                 <hr class="dropdown-divider d-md-none">
                 <li class="nav-item">
-                    <a class="nav-link" href="/"><span class="h5">Home</span></a>
+                    <a class="nav-link" href="/"><span class="h6">Home</span></a>
                 </li>
                 <hr class="dropdown-divider d-md-none">
                 <li class="nav-item">
-                    <a class="nav-link" href="/products"><span class="h5">Store</span></a>
+                    <a class="nav-link" href="/products"><span class="h6">Store</span></a>
                 </li>
                 <hr class="dropdown-divider d-md-none">
                 <li class="nav-item">
-                    <a class="nav-link" href="/about"><span class="h5">About Us</span></a>
+                    <a class="nav-link" href="/about"><span class="h6">About Us</span></a>
                 </li>
             </ul>
             <!-- Left links -->
@@ -82,7 +66,7 @@
                 <!-- Notifications Dropdown -->
                 <li class="nav-item dropdown d-flex flex-row justify-content-start align-items-center">
                     <button class="btn nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
+                            data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="h3 px-md-1 pt-2 text-white  fas fa-bell"></i>
                     </button>
                     <!-- Dropdown menu -->
@@ -90,21 +74,24 @@
                         <!-- Notification items here -->
                     </ul>
                 </li>
+
+
                 <!-- Cart Button -->
                 <%
-                            if (username != null && !username.trim().equals("Guest")) {
-                        %>
+                    if (username != null && !username.trim().equals("Guest")) {
+                %>
                 <li class="nav-item d-flex flex-row justify-content-start align-items-center">
-                    <button class="nav-link btn" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="window.fetchData()">
-                    <i class="bi h3 text-white bi-cart"></i>
-                </button>
+                    <button class="nav-link btn relative" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                        <i class="bi h3 text-white bi-cart"></i>
+                        <span id="cartCount" class="badge-cart absolute badge rounded-pill badge-notification bg-danger">0</span>
+                    </button>
                 </li>
-                 <%}%>
-                 
+                <%}%>
+
                 <!-- User Profile Section -->
                 <li class="nav-item dropdown">
                     <button class="btn py-2 nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
+                            aria-expanded="false">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(2).jpg" class="rounded-circle img-fluid"
                              height='40' width='40'>
                     </button>
@@ -117,7 +104,7 @@
 
                         <!-- Divider -->
                         <li><hr class="dropdown-divider"></li>
-                        
+
                         <!-- Profile Dropdown Items -->
                         <%
                             if (username == null || username.equals("Guest")) {
@@ -130,7 +117,7 @@
 
                         <!-- Divider -->
                         <li><hr class="dropdown-divider"></li>
-                        
+
                         <!-- If the user is not "Guest" and hence logged in, show Logout -->
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                             <%
@@ -146,5 +133,89 @@
     </div>
     <!-- Container wrapper -->
 </nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeCartCount();
+    });
+
+    function initializeCartCount() {
+        console.log("Initializing cart count...");
+
+        var badge = document.getElementById("cartCount");
+        if (badge) {
+            getCartItemsCount().then(count => {
+                console.log("Cart items count:", count);
+                badge.innerHTML = count;
+            }).catch(error => {
+                console.error("Error getting cart items count:", error);
+            });
+        } else {
+            console.error("Badge element not found");
+        }
+    }
+
+    function getCartItemsCount() {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/cartUpdate', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var cartItemsJS = JSON.parse(xhr.responseText);
+                        var itemCount = cartItemsJS.reduce((total, item) => {
+                            return total + parseInt(item.qty, 10);
+                        }, 0);
+                        resolve(itemCount);
+                    } else {
+                        reject(new Error('Failed to fetch cart items: ' + xhr.status));
+                    }
+                }
+            };
+            xhr.send();
+        });
+    }
+
+    window.updateCartBadge = function (count) {
+        var badge = document.getElementById("cartCount");
+        badge.innerHtml = count;
+    };
+
+    window.changeCardBadge = function (val) {
+        if (document.readyState === "loading") { 
+            document.addEventListener('DOMContentLoaded', () => updateBadge(val));
+        } else {
+            updateBadge(val);
+        }
+    };
+
+    function updateBadge(val) {
+        console.log("Triggered updateBadge");
+
+        var badge = document.getElementById("cartCount");
+
+        if (badge) {
+           
+            var currentBadgeValue = badge.innerHTML.trim();
+
+           
+            var currentVal = parseInt(currentBadgeValue, 10);
+            if (isNaN(currentVal)) {
+                console.error("Current badge value is not a number:", currentBadgeValue);
+                currentVal = 0;
+            }
+
+           
+            var additionalVal = parseInt(val, 10);
+            if (!isNaN(additionalVal)) {
+            
+                badge.innerHTML = currentVal + additionalVal;
+            } else {
+                console.error("Invalid value passed to updateBadge:", val);
+            }
+        } else {
+            console.error("Badge element not found");
+        }
+    }
+</script>
 <!-- Navbar -->
 

@@ -1,0 +1,34 @@
+
+.navbar-dark .nav-item .nav-link {
+    color: #fff;
+}
+
+.navbar-dark .nav-item .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    border-radius: 0.25rem;
+    color: #fff;
+}
+
+.fa-li {
+    position: relative;
+    left: 0;
+}
+.drelative {
+    position: relative;
+}
+
+.badge-cart {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(100%, -200%);
+    font-size: 0.75rem;
+    height: 1.05rem;
+    width: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+

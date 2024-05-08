@@ -102,6 +102,7 @@
                                 console.error('Failed to add to cart:', error);
                                 window.location.href = '/login';
                             });
+                            window.changeCardBadge(1);
                 });
             });
 

@@ -1,0 +1,81 @@
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.total-cost {
+    flex-shrink: 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+.offcanvas.offcanvas-end {
+    z-index: 1055; /* This value may need to be higher than the navbar or other elements */
+}
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border: none;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.product-name {
+    font-weight: 600;
+}
+
+.product-price {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.input-group {
+    display: flex;
+}
+
+.input-group .btn {
+    border-radius: 50%;
+    padding: 5px 8px;
+}
+
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between; /* This ensures elements are spaced from one to another end */
+    align-items: center;
+    width: 100%; /* Ensures the container takes full width */
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.input-group .btn {
+    border-radius: 50%;
+    padding: 5px 8px;
+}
+
+.input-group .form-control {
+    text-align: left;
+    padding: 0.375rem 0.75rem;
+    margin: 0 5px;
+    font-size: 1rem;
+    width: auto; /* Control width directly to prevent stretching */
+}
+
