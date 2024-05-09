@@ -46,6 +46,14 @@ public class Order {
         this.order_item = order_items;
     }
     
+    public Order(int id, int user_id, int total_cost, String order_status, String orderd_date) {
+        this.id = id;
+        this.user_id = user_id;
+        this.total_cost =total_cost;
+        this.order_status = order_status;
+        this.order_date = orderd_date;
+    }
+    
     public void addOrderItem(OrderItem item) {
         this.order_item.add(item);
     }

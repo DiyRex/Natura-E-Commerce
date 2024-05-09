@@ -95,9 +95,8 @@
                     };
                     xhr.send();
                 }
-                window.fetchData = async function () {
+                window.fetchData = function () {
                     getCartItems();
-                    return itemCount;
                 };
                 function createCartItemCards() {
                     const cartItemsContainer = document.querySelector('.cart-items');

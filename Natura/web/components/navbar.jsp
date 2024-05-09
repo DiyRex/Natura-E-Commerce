@@ -81,7 +81,7 @@
                     if (username != null && !username.trim().equals("Guest")) {
                 %>
                 <li class="nav-item d-flex flex-row justify-content-start align-items-center">
-                    <button class="nav-link btn relative" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                    <button class="nav-link btn relative" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="window.fetchData()">
                         <i class="bi h3 text-white bi-cart"></i>
                         <span id="cartCount" class="badge-cart absolute badge rounded-pill badge-notification bg-danger">0</span>
                     </button>
