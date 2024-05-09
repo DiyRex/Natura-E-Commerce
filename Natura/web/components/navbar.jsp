@@ -197,7 +197,6 @@
            
             var currentBadgeValue = badge.innerHTML.trim();
 
-           
             var currentVal = parseInt(currentBadgeValue, 10);
             if (isNaN(currentVal)) {
                 console.error("Current badge value is not a number:", currentBadgeValue);
