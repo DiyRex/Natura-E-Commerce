@@ -10,6 +10,7 @@ public class Order {
 
     private int id;
     private int user_id;
+    private String user_name;
     private String shipping_Address;
     private String payment;
     private int total_cost;
@@ -38,6 +39,17 @@ public class Order {
     public Order(int id, int user_id, String shipping_Address, String payment, int total_cost, String order_status, String orderd_date, List<OrderItem> order_items) {
         this.id = id;
         this.user_id = user_id;
+        this.shipping_Address = shipping_Address;
+        this.payment = payment;
+        this.total_cost =total_cost;
+        this.order_status = order_status;
+        this.order_date = orderd_date;
+        this.order_item = order_items;
+    }
+    
+    public Order(int id, String username, String shipping_Address, String payment, int total_cost, String order_status, String orderd_date, List<OrderItem> order_items) {
+        this.id = id;
+        this.user_name = username;
         this.shipping_Address = shipping_Address;
         this.payment = payment;
         this.total_cost =total_cost;
@@ -168,6 +180,20 @@ public class Order {
      */
     public void setOrder_item(List<OrderItem> order_item) {
         this.order_item = order_item;
+    }
+
+    /**
+     * @return the user_name
+     */
+    public String getUser_name() {
+        return user_name;
+    }
+
+    /**
+     * @param user_name the user_name to set
+     */
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
 }

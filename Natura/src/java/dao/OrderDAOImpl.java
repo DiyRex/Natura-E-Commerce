@@ -65,8 +65,6 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<Order> fetchOrdersByUserId(int userId) {
-        System.out.println("INSIDE");
-        System.out.println("user id is " + userId);
         String sql = "SELECT o.Order_ID, o.User_ID, o.Shipping_Address, o.Payment, o.Total_Cost, o.Order_Status, o.Orderd_Date, "
                 + "GROUP_CONCAT(CONCAT('Orditem_ID:', oi.Orditem_ID, '\n', 'Item:', p.Title, '\n', 'Qty:', oi.Qty, '\n', 'Price:', oi.Price) SEPARATOR '; ') AS Order_Items "
                 + "FROM orders o JOIN order_items oi ON o.Order_ID = oi.Order_ID "
@@ -95,6 +93,36 @@ public class OrderDAOImpl implements OrderDAO {
         }
         return orders;
     }
+    
+    @Override
+    public List<Order> fetchAllOrders() {
+        String sql = "SELECT o.Order_ID, u.Name, o.Shipping_Address, o.Payment, o.Total_Cost, o.Order_Status, o.Orderd_Date, "
+                + "GROUP_CONCAT(CONCAT('Orditem_ID:', oi.Orditem_ID, '\n', 'Item:', p.Title, '\n', 'Qty:', oi.Qty, '\n', 'Price:', oi.Price) SEPARATOR '; ') AS Order_Items "
+                + "FROM orders o JOIN order_items oi ON o.Order_ID = oi.Order_ID "
+                + "JOIN product p ON p.Product_ID = oi.Product_ID "
+                + "JOIN user u ON o.User_ID = u.User_ID "
+                + "GROUP BY o.Order_ID";
+        List<Order> orders = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int orderId = rs.getInt("Order_ID");
+                    String userName = rs.getString("Name");
+                    String shippingAddress = rs.getString("Shipping_Address");
+                    String payment = rs.getString("Payment");
+                    int totalCost = rs.getInt("Total_Cost");
+                    String orderStatus = rs.getString("Order_Status");
+                    String orderDate = rs.getString("Orderd_Date");
+                    String orderItemsString = rs.getString("Order_Items");
+                    List<OrderItem> orderItems = parseAndAddOrderItems(orderItemsString);
+                    Order order = new Order(orderId, userName, shippingAddress, payment, totalCost, orderStatus, orderDate, orderItems);
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+        }
+        return orders;
+    }
 
     public static List<OrderItem> parseAndAddOrderItems(String orderItemsString) {
         List<OrderItem> items = new ArrayList<>();
@@ -110,5 +138,24 @@ public class OrderDAOImpl implements OrderDAO {
             items.add(orderItem);
         }
         return items;
+    }
+
+    @Override
+    public void deleteOrder(int order_id) throws Exception {
+       String sql = "DELETE FROM orders WHERE Order_ID = ?";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, order_id);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void updateOrderStatus(int order_id) throws Exception {
+        String sql = "UPDATE orders SET Order_Status=? WHERE Order_ID=?";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, "completed");
+            statement.setInt(2, order_id);
+            statement.executeUpdate();
+        }
     }
 }
