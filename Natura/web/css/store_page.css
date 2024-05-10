@@ -7,3 +7,34 @@
 }
 
 
+/* Style for the popup message */
+.popup-message {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    top: 120px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    color: green;
+    
+}
+
+.textMessage{
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 10%;
+    padding: 5px 5px 5px 5px;
+}
+
+/* Make the message visible */
+.show {
+    display: block;
+    opacity: 1;
+}

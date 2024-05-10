@@ -19,10 +19,13 @@
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <link href="../css/store_page.css" rel="stylesheet" />
         <title>Store</title>
-        
+
     </head>
     <body>
         <%@ include file="../components/navbar.jsp" %>
+            <div class="popup-message">
+                <span class="textMessage"><i class="bi bi-cart-check"></i> Added to cart</span>
+            </div>
         <div class="container-md mt-5">
             <br>
             <br>
@@ -44,6 +47,7 @@
                             <h5 class="card-title fw-bold text-center h3"><%= product.getTitle()%></h5>
                             <p class="card-text text-center"><small>(<%= product.getDescription()%>)</small></p>
                             <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice()%></h6>
+
                             <div class="d-flex justify-content-evenly mt-4">
                                 <!--                        <a href="#" class="btn shadow-lg border">
                                                             <i id="heart" class="bi bi-heart text-danger heart-icon"></i>
@@ -102,9 +106,20 @@
                                 console.error('Failed to add to cart:', error);
                                 window.location.href = '/login';
                             });
-                            window.changeCardBadge(1);
+                    window.changeCardBadge(1);
+                    showAddToCartPopup();
                 });
             });
+
+            function showAddToCartPopup() {
+                var popup = document.querySelector('.popup-message');
+                popup.classList.add('show');
+
+                // Automatically hide the popup after 3 seconds
+                setTimeout(function () {
+                    popup.classList.remove('show');
+                }, 2000);
+            }
 
             // favourite heart animation
             var heart = document.querySelectorAll(".heart-icon");
