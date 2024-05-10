@@ -6,8 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-if(session.getAttribute("userID") == null){
-    response.sendRedirect("/login");
+    if (session.getAttribute("userID") == null) {
+        response.sendRedirect("/login");
     }
 %>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ if(session.getAttribute("userID") == null){
         <title>Checkout Page</title>
 
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <%@ include file="../components/navbar.jsp" %>
         <div class="container mt-5">
             <h2 class="text-center title-margin mb-4 mb-md-5 pb-md-2">Checkout</h2>
@@ -36,9 +36,7 @@ if(session.getAttribute("userID") == null){
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="radio" name="addressOption" id="defaultAddress" value="default" checked aria-label="Default address">
                                 </div>
-                                <textarea id="defaddr" class="form-control" aria-label="Default address" disabled style="height: 150px;"><%=
-                                    session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"
-                                %></textarea>
+                                    <textarea id="defaddr" class="form-control" aria-label="Default address" disabled style="height: 150px;"><%=session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"%></textarea>
 
                             </div>
                         </div>
@@ -131,7 +129,7 @@ if(session.getAttribute("userID") == null){
                                         total = 200; // Default shipping cost if parsing fails
                                     }
                                     String formattedTotal = String.format("%.2f", total); // Formatting the total to two decimal places
-                                %>
+%>
                                 <span class="h5">LKR <%= formattedTotal%></span>
                             </div>
                         </div>
@@ -175,7 +173,9 @@ if(session.getAttribute("userID") == null){
             </div>
         </div>
 
-
+        <div class="mt-auto">
+            <%@ include file="../components/footer.jsp" %>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
                             document.getElementById('newAddress').addEventListener('change', function () {
@@ -267,7 +267,7 @@ if(session.getAttribute("userID") == null){
                                     sendOrderDetails(userId, total_cost, shipping_address, payment, cartId);
                                 }
                             }
-                           
+
 
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

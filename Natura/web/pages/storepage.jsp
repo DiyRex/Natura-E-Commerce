@@ -21,12 +21,12 @@
         <title>Store</title>
 
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <%@ include file="../components/navbar.jsp" %>
+        <div class="container-md mt-5">
             <div class="popup-message">
                 <span class="textMessage"><i class="bi bi-cart-check"></i> Added to cart</span>
             </div>
-        <div class="container-md mt-5">
             <br>
             <br>
             <div class="mt-4">

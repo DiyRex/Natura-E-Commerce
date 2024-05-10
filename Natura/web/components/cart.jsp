@@ -51,7 +51,7 @@
                         <h5>Total Cost:</h5>
                         <span id="totalCost"></span>
                     </div>
-                    <div class="d-flex justify-content-center mt-3">
+                    <div class="d-flex justify-content-center mt-auto">
                         <form action="/checkout" method="get">
                             <input type="hidden" id="hiddenTotal" name="total" value="<%=totalCost%>">
                             <button type="submit" id="btnCheckout" class="btn btn-success">Checkout <i class="bi bi-arrow-right"></i></button>

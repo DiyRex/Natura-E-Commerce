@@ -42,8 +42,8 @@
                         <h1 class="text-white text-center display-3">
                             Try Some Natural <span class="text-success">Foods</span>
                         </h1>
-                        <h5 class="text-muted text-center h3">
-                            directly from our farms to your <span class="text-success">cart</span>
+                        <h5 class="text-muted text-center h3 mt-3">
+                            Directly from our farms to your <span class="text-success">cart</span>
                         </h5>
                         <div class="d-flex flex-column btn-container">
 

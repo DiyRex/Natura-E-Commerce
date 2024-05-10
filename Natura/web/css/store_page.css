@@ -6,6 +6,9 @@
     object-position: center;
 }
 
+.cart-items{
+    flex-grow: 0.9!important;
+}
 
 /* Style for the popup message */
 .popup-message {
@@ -15,7 +18,7 @@
     align-items: center;
     text-align: center;
     width: 100%;
-    top: 120px;
+    top: 160px;
     left: 0;
     right: 0;
     z-index: 1000;
