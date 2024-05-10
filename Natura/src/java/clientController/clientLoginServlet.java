@@ -33,22 +33,21 @@ public class clientLoginServlet extends HttpServlet {
         String userID = null;
         String cartID = null;
         String addressLine = "";
-        
+
         // Retrieve email and password from the req
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         UserDAO userDAO = new UserDAOImpl();
-        
+
         try {
-            
+
             User user = userDAO.loginUser(email, password);
 
             if (user != null) {
                 // User is found, add user to session
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                
 
                 userName = user.getName();
                 userID = String.valueOf(user.getId());
@@ -61,17 +60,17 @@ public class clientLoginServlet extends HttpServlet {
                         + (user.getCity() != null ? user.getCity() : "") + " \n"
                         + (user.getState() != null ? user.getState() : "") + " \n"
                         + (user.getZip_code() != null ? user.getZip_code() : "");
-                
+
                 session.setAttribute("userName", userName);
                 session.setAttribute("userID", userID);
                 session.setAttribute("cartID", cartID);
                 session.setAttribute("addressLine", addressLine);
 
-                response.sendRedirect("/"); 
+                response.sendRedirect("/");
             } else {
                 // User not found or invalid login, handle as login failure
                 request.setAttribute("errorMessage", "Invalid email or password");
-                request.getRequestDispatcher("/login").forward(request, response);
+                request.getRequestDispatcher("/pages/authentication/login_page.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             e.printStackTrace();  // Log the SQL exception

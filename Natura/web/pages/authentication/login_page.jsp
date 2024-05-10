@@ -28,6 +28,7 @@
             </div>-->
             <form action="/login" method="post">
                 <h1 class="h2 mb-5 fw-normal text-center">Login</h1>
+                <p class="text-danger text-center"><%=request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : ""  %></p>
                 <div class="form-group">
                     <label for="inputEmail" class="visually-hidden">Email address</label>
                     <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>

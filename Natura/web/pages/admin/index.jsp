@@ -9,6 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page import="dao.ProductDAOImpl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%String adminName = (String) session.getAttribute("adminName");%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,9 +45,18 @@
                     <button class="btn rounded-pill  me-2" type="button">
                         <i class="h3 bi bi-bell"></i>
                     </button>
-                    <button class="btn rounded-pill" type="button">
+                    <button class="btn dropdown-toggle" href="#" id="adminProfileDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                         <i class="h3 bi bi-person-circle"></i>
                     </button>
+                    <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarProfileDropdown">
+                        <!-- Profile Name -->
+                        <li><a class="dropdown-item" href="#"><%= session.getAttribute("adminName")%></a></li>
+                        <!-- Divider -->
+                        <li><hr class="dropdown-divider"></li>
+                        <!-- If the user is not "Guest" and hence logged in, show Logout -->
+                        <li><a class="dropdown-item" href="/adminLogout">Logout</a></li>
+                    </ul>
                 </div>
             </div>
 

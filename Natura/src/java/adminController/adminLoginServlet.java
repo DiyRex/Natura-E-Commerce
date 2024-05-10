@@ -19,23 +19,20 @@ import models.Admin;
  */
 public class adminLoginServlet extends HttpServlet {
 
-  
-  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/authentication/admin_login_page.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/authentication/admin_login_page.jsp");
         dispatcher.forward(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Admin admin = null;
-       String email = request.getParameter("email");
-       String password = request.getParameter("password");
-       AdminDAOImpl admin_dao = new AdminDAOImpl();
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        AdminDAOImpl admin_dao = new AdminDAOImpl();
         try {
             admin = admin_dao.loginAdmin(email, password);
             if (admin != null) {
@@ -45,12 +42,15 @@ public class adminLoginServlet extends HttpServlet {
                 session.setAttribute("adminEmail", admin.getEmail());
                 session.setAttribute("isAdminLogged", true);
                 response.sendRedirect("/admin");
+            } else {
+                request.setAttribute("errorMessage", "Invalid email or password");
+                request.getRequestDispatcher("/pages/authentication/admin_login_page.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             Logger.getLogger(adminLoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("errorMessage", "Invalid email or password");
             request.getRequestDispatcher("/adminLogin").forward(request, response);
         }
-       
+
     }
 }
