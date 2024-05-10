@@ -23,7 +23,7 @@
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
-        <a class="navbar-brand mx-4" href="#">
+        <a class="navbar-brand mx-4" href="/">
             <img src="./images/naturaLogo.png" height="60" alt="" loading="lazy" />
         </a>
 
