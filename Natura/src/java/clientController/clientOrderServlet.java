@@ -26,13 +26,18 @@ public class clientOrderServlet extends HttpServlet {
             OrderDAOImpl order_dao = new OrderDAOImpl();
             response.setCharacterEncoding("UTF-8");
             HttpSession session = request.getSession();
-            int userId = Integer.parseInt((String) session.getAttribute("userID"));
+            int userId = 0;
+            try{
+             userId = Integer.parseInt((String) session.getAttribute("userID"));
+            }catch(Exception e){
+             response.sendRedirect("/login");
+            }
             List<Order> orders = order_dao.fetchOrdersByUserId(userId);
             if(userId != 0){
             request.setAttribute("orders", orders);
             request.getRequestDispatcher("/pages/my_orders.jsp").forward(request, response);
             }else{
-                request.getRequestDispatcher("/login").forward(request, response);
+                response.sendRedirect("/login");
             }
         } catch (Exception e) {
             out.println("Error: " + e.getMessage());

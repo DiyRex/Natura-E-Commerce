@@ -22,7 +22,10 @@
             </div>
     <div class="accordion mt-4" id="ordersAccordion">
         <% 
-        List<Order> orders = (List<Order>) request.getAttribute("orders"); // Assume this attribute is passed correctly
+        List<Order> orders = (List<Order>) request.getAttribute("orders");
+        if(orders == null){
+            response.sendRedirect("/login");
+            }
         int count = 0;
         for (Order order : orders) { 
             count++;

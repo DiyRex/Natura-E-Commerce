@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+if(session.getAttribute("userID") == null){
+    response.sendRedirect("/login");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,7 +18,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/checkout.css" rel="stylesheet">
         <title>Checkout Page</title>
-        
+
     </head>
     <body>
         <%@ include file="../components/navbar.jsp" %>
@@ -31,9 +36,9 @@
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="radio" name="addressOption" id="defaultAddress" value="default" checked aria-label="Default address">
                                 </div>
-                                <textarea id="defaddr" class="form-control" aria-label="Default address" disabled style="height: 150px;">
-                                    <%= session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"%>
-                                </textarea>
+                                <textarea id="defaddr" class="form-control" aria-label="Default address" disabled style="height: 150px;"><%=
+                                    session.getAttribute("addressLine") != null ? session.getAttribute("addressLine") : "No Address Added"
+                                %></textarea>
 
                             </div>
                         </div>
@@ -146,10 +151,27 @@
                     </div>
                     <!-- Place Order Button -->
                     <div class="row">
-                        <button type="submit" onclick="validateCheckboxes()" class="btn btn-lg btn-primary p-2 mt-3">Place Order</button>
+                        <button type="button" onclick="validateCheckboxes()" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-lg btn-primary p-2 mt-3">Place Order</button>
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Order</h5>
+                    </div>
+                    <div class="modal-body text-center h3 text-success">
+                        <i class="bi bi-bag-check"></i> Order Placed Successfully
+                    </div>
+                    <div class="modal-footer justify-content-center text-center">
+                        <a href="/myOrders" type="button" class="btn btn-primary">Ok</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -173,13 +195,13 @@
                                 });
                             });
 
-                            function sendOrderDetails(userId,totalCost,shippingAddress,paymentMethod, cartId) {
+                            function sendOrderDetails(userId, totalCost, shippingAddress, paymentMethod, cartId) {
                                 const postData = {
                                     userId: userId,
                                     totalCost: totalCost,
                                     shippingAddress: shippingAddress,
                                     paymentMethod: paymentMethod,
-                                    cartId:cartId
+                                    cartId: cartId
                                 };
 
                                 console.log("Sending order details:");
@@ -196,12 +218,15 @@
                                     success: function (response) {
                                         console.log("Response received:", response);
                                         console.log("Order processed successfully.");
+                                        $('#exampleModalCenter').modal('show');
                                     },
                                     error: function (xhr, status, error) {
                                         console.error('Failed to process order:', status, error);
+                                        $('#exampleModalCenter').modal('show');
                                     }
                                 });
-                            };
+                            }
+                            ;
 
 
 
@@ -239,9 +264,10 @@
                                         shipping_address = `\${name}\n\${aptNo},\n\${street},\n\${city},\n\${state},\n\${zipCode}`;
 
                                     }
-                                    sendOrderDetails(userId,total_cost,shipping_address,payment,cartId);
+                                    sendOrderDetails(userId, total_cost, shipping_address, payment, cartId);
                                 }
                             }
+                           
 
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

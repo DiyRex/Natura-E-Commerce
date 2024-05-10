@@ -23,6 +23,6 @@ public class clientLogoutServlet extends HttpServlet {
         session.setAttribute("userID", null);
         session.setAttribute("cartID", null);
         session.setAttribute("addressLine", null);
-        request.getRequestDispatcher("/login").forward(request, response);
+        response.sendRedirect("/login");
     }
 }

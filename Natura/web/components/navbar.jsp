@@ -63,6 +63,9 @@
 
             <!-- Right Nav links -->
             <ul class="navbar-nav mb-2 mb-lg-0 align-items-start justify-content-start px-5 px-md-0">
+                 <%
+                    if (username != null && !username.trim().equals("Guest")) {
+                %>
                 <!-- Notifications Dropdown -->
                 <li class="nav-item dropdown d-flex flex-row justify-content-start align-items-center">
                     <button class="btn nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
@@ -71,15 +74,13 @@
                     </button>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end notifications-list p-1" aria-labelledby="navbarDropdown">
-                        <!-- Notification items here -->
+                        <li>No new notifications</li>
                     </ul>
                 </li>
 
 
                 <!-- Cart Button -->
-                <%
-                    if (username != null && !username.trim().equals("Guest")) {
-                %>
+               
                 <li class="nav-item d-flex flex-row justify-content-start align-items-center">
                     <button class="nav-link btn relative" id="cartbtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" onclick="window.fetchData()">
                         <i class="bi h3 text-white bi-cart"></i>
@@ -89,11 +90,10 @@
                 <%}%>
 
                 <!-- User Profile Section -->
-                <li class="nav-item dropdown">
-                    <button class="btn py-2 nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(2).jpg" class="rounded-circle img-fluid"
-                             height='40' width='40'>
+                <li class="nav-item dropdown d-flex flex-row justify-content-start align-items-center mx-1">
+                    <button class="btn nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="h3 px-md-1 pt-2 text-white  fa-regular fa-circle-user"></i>
                     </button>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarProfileDropdown">

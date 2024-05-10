@@ -49,7 +49,7 @@ public class adminLoginServlet extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(adminLoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("errorMessage", "Invalid email or password");
-            request.getRequestDispatcher("/adminLogin").forward(request, response);
+            response.sendRedirect("/adminlogin");
         }
 
     }
