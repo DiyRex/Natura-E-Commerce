@@ -11,7 +11,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public Product getProduct(int id) throws SQLException {
-        String sql = "SELECT * FROM product WHERE id = ?";
+        String sql = "SELECT * FROM product WHERE Product_ID = ?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -95,7 +95,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public void updateProduct(Product product) throws SQLException {
-        String sql = "UPDATE product SET title=?, description=?, price=?, quantity=? WHERE id=?";
+        String sql = "UPDATE product SET Title=?, Description=?, Price=?, Qty=? WHERE Product_ID=?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, product.getTitle());
             statement.setString(2, product.getDescription());
@@ -108,7 +108,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public void deleteProduct(int id) throws SQLException {
-        String sql = "DELETE FROM product WHERE id = ?";
+        String sql = "DELETE FROM product WHERE Product_ID = ?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();

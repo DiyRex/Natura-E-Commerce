@@ -121,7 +121,7 @@
                                     <img src="./images/Products/<%= product.getImage()%>" class="card-img-top fit-image" style="height: 50%; width: 100%; object-fit: cover;" alt="<%= product.getTitle()%> Image" />
                                     <div class="card-body text-center">
                                         <h5 class="card-title fw-bold text-center h3"><%= product.getTitle()%></h5>
-                                        <p class="card-text text-center"><small>(100g)</small></p>
+                                        <p class="card-text text-center"><small>(<%= product.getDescription()%>)</small></p>
                                         <h6 class="text-center fw-bolder h5">LKR <%= product.getPrice()%></h6>
                                     </div>
                                 </div>

@@ -63,8 +63,8 @@
                         <td>LKR <%=product.getPrice()%></td>
                         <td><%=product.getQty()%></td>
                         <td>
-                            <button class="btn btn-primary btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button class="btn btn-primary btn-sm" id="edit-btn" data-row-id="<%=product.getId()%>" data-bs-toggle="modal" data-bs-target="#editProductModal">Edit</button>
+                            <button class="btn btn-danger btn-sm" id="delete-btn" data-row-id="<%=product.getId()%>" data-bs-toggle="modal" data-bs-target="#deleteProductModal">Delete</button>
                         </td>
                     </tr>
                     <%
@@ -78,7 +78,97 @@
                 </tbody>
             </table>
         </div>
+        <!-- Edit User Modal -->
+        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProductModalLabel">Edit Product Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"  id="edit-modal-body">
+                        <form>
+                            <!-- Form inputs for editing user details -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="btn-edit" type="button" class="btn btn-primary">Edit Product</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Delete User Modal -->
+        <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteProductModalLabel">Delete User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="delete-modal-body">
+                        Are you sure you want to delete this user?
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-delete" type="button" the class="btn btn-danger">Delete Product</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('button[data-bs-target="#editProductModal"]').forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        var id = button.getAttribute("data-row-id");
+                        console.log(id);
+                        document.getElementById("edit-modal-body").innerHTML = `Are you sure you want to edit user \${id}?`;
+                        document.getElementById("btn-edit").href = `/admin/products/editProduct?id=\${id}`;
+
+                    });
+                });
+                document.querySelectorAll('button[data-bs-target="#deleteProductModal"]').forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        var id = button.getAttribute("data-row-id");
+                        console.log(id);
+                        document.getElementById("delete-modal-body").innerHTML = `Are you sure you want to delete user \${id}?`;
+                        document.getElementById("btn-delete").setAttribute("btn-data-id", id);
+                    });
+                });
+
+                document.getElementById("btn-delete").addEventListener('click', function (event) {
+                    var id = this.getAttribute("btn-data-id");
+                    deleteProduct(id);
+                });
+
+
+                function deleteProduct(id) {
+                    const url = `/admin/products/editProduct?id=\${id}`;
+
+                    fetch(url, {
+                        method: 'DELETE'
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.href = "/admin/products";
+                        } else {
+                            console.error('Failed to delete product with ID:', id);
+                            if (response.status === 204) {
+                                console.log('Product deleted successfully, but no content returned.');
+                                window.location.href = "/admin/products";
+                            } else {
+                                response.text().then(text => {
+                                    window.location.href = "/admin/products";
+                                });
+                            }
+                        }
+                    }).catch(function (err) {
+                        console.error('Error sending delete request:', err, "url:", url);
+                        alert('Error in sending delete request.');
+                    });
+                }
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

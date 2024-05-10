@@ -87,6 +87,10 @@
         <servlet-name>editUserServlet</servlet-name>
         <servlet-class>adminController.editUserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>editProductServlet</servlet-name>
+        <servlet-class>adminController.editProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -166,6 +170,10 @@
     <servlet-mapping>
         <servlet-name>editUserServlet</servlet-name>
         <url-pattern>/admin/users/editUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editProductServlet</servlet-name>
+        <url-pattern>/admin/products/editProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
