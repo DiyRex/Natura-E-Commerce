@@ -34,6 +34,9 @@
                 <div class="col-3"> <!-- Empty column for balance -->
                 </div>
             </div>
+            <div class="">
+                <a href="/admin/users/addUser" class="btn btn-primary mb-4 mt-4"><i class="h6 bi bi-plus"></i> Add Users</a>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -58,8 +61,8 @@
                         <td><%= user.getEmail()%></td>
                         <td><%= user.getApt_no() + " " + user.getStreet() + ", " + user.getCity() + ", " + user.getState() + " " + user.getZip_code()%></td>
                         <td>
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editUserModal<%= user.getId()%>">Edit</button>
-                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal<%= user.getId()%>">Delete</button>
+                            <button class="btn btn-primary btn-sm" id="edit-btn" data-row-id="<%=user.getId()%>" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</button>
+                            <button class="btn btn-danger btn-sm" id="delete-btn" data-row-id="<%=user.getId()%>" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
                         </td>
                     </tr>
                     <%
@@ -85,14 +88,14 @@
                         <h5 class="modal-title" id="editUserModalLabel">Edit User Details</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body"  id="edit-modal-body">
                         <form>
                             <!-- Form inputs for editing user details -->
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <a href="#" id="btn-edit" type="button" class="btn btn-primary">Edit user</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -106,17 +109,61 @@
                         <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="delete-modal-body">
                         Are you sure you want to delete this user?
                     </div>
                     <div class="modal-footer">
+                        <button id="btn-delete" type="button" the class="btn btn-danger">Delete User</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" the class="btn btn-danger">Delete User</button>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('button[data-bs-target="#editUserModal"]').forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        var id = button.getAttribute("data-row-id");
+                        console.log(id);
+                        document.getElementById("edit-modal-body").innerHTML = `Are you sure you want to edit user \${id}?`;
+                        document.getElementById("btn-edit").href = `/admin/users/editUser?id=\${id}`;
 
+                    });
+                });
+                document.querySelectorAll('button[data-bs-target="#deleteUserModal"]').forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        var id = button.getAttribute("data-row-id");
+                        console.log(id);
+                        document.getElementById("delete-modal-body").innerHTML = `Are you sure you want to delete user \${id}?`;
+                        document.getElementById("btn-delete").setAttribute("btn-data-id", id);
+                    });
+                });
+
+                document.getElementById("btn-delete").addEventListener('click', function (event) {
+                    console.log("hi")
+                    var id = this.getAttribute("btn-data-id");
+                    deleteUser(id);
+                });
+
+
+                function deleteUser(id) {
+                    const url = '/admin/users/editUser?id=' + id;
+
+                    fetch(url, {
+                        method: 'DELETE'
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.href = "/admin/users";
+                        } else {
+                            console.error('Failed to delete user with ID:', id);
+                            response.text().then(text => alert('Failed to delete user: ' + text));
+                        }
+                    }).catch(function (err) {
+                        console.error('Error sending delete request:', err, "url:", url);
+                    });
+                }
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

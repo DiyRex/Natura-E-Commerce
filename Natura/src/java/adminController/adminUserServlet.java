@@ -51,5 +51,15 @@ public class adminUserServlet extends HttpServlet {
             throws ServletException, IOException {
 
     }
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+    }
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+    }
 
 }

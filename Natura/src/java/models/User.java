@@ -5,6 +5,7 @@ package models;
  * @author Devin
  */
 public class User {
+
     private int id;
     private int cart_id;
     private String name;
@@ -16,45 +17,55 @@ public class User {
     private String zip_code;
     private String email;
     private String password;
-    
-    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email)
-    {
-       this.id = id;
-       this.name = name;
-       this.contact = contact;
-       this.apt_no = apt_no;
-       this.street = street;
-       this.city = city;
-       this.state = state;
-       this.zip_code = zip_code;
-       this.email = email;
+
+    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email) {
+        this.id = id;
+        this.name = name;
+        this.contact = contact;
+        this.apt_no = apt_no;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip_code = zip_code;
+        this.email = email;
     }
-    
-    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, int cart_id)
-    {
-       this.id = id;
-       this.name = name;
-       this.contact = contact;
-       this.apt_no = apt_no;
-       this.street = street;
-       this.city = city;
-       this.state = state;
-       this.zip_code = zip_code;
-       this.email = email;
-       this.cart_id = cart_id;
+
+    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, int cart_id) {
+        this.id = id;
+        this.name = name;
+        this.contact = contact;
+        this.apt_no = apt_no;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip_code = zip_code;
+        this.email = email;
+        this.cart_id = cart_id;
     }
-    
-    public User(String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, String password)
-    {
-       this.name = name;
-       this.contact = contact;
-       this.apt_no = apt_no;
-       this.street = street;
-       this.city = city;
-       this.state = state;
-       this.zip_code = zip_code;
-       this.email = email;
-       this.password = password;
+
+    public User(String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, String password) {
+        this.name = name;
+        this.contact = contact;
+        this.apt_no = apt_no;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip_code = zip_code;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(int id, String name, String contact, String apt_no, String street, String city, String state, String zip_code, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.contact = contact;
+        this.apt_no = apt_no;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip_code = zip_code;
+        this.email = email;
+        this.password = password;
     }
 
     /**
@@ -70,7 +81,7 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     /**
      * @return the id
      */
@@ -84,7 +95,6 @@ public class User {
     public void setCartId(int cart_id) {
         this.cart_id = cart_id;
     }
-
 
     /**
      * @return the name
@@ -212,5 +222,4 @@ public class User {
         this.password = password;
     }
 
-    
 }

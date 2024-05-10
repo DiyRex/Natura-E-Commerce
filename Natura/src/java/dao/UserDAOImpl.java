@@ -92,7 +92,8 @@ public class UserDAOImpl implements UserDAO {
                                 resultSet.getString("City"),
                                 resultSet.getString("State"),
                                 resultSet.getString("ZipCode"),
-                                resultSet.getString("Email")
+                                resultSet.getString("Email"),
+                                resultSet.getString("Password") 
                         );
                     }
                 }
@@ -107,7 +108,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE user SET Name = ?, Contact = ?, Apt_No = ?, Street = ?, City = ?, State = ?, ZipCode = ?, Email = ? WHERE User_ID = ?";
+        String sql = "UPDATE user SET Name = ?, Contact = ?, Apt_No = ?, Street = ?, City = ?, State = ?, ZipCode = ?, Email = ?, Password = ? WHERE User_ID = ?";
         Connection conn = null;
         try {
             conn = DBConnection.getConnection();
@@ -120,7 +121,8 @@ public class UserDAOImpl implements UserDAO {
                 stmt.setString(6, user.getState());
                 stmt.setString(7, user.getZip_code());
                 stmt.setString(8, user.getEmail());
-                stmt.setInt(9, user.getId());
+                stmt.setString(9, user.getPassword());
+                stmt.setInt(10, user.getId());
                 stmt.executeUpdate();
             }
         } finally {

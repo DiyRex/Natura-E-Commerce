@@ -79,6 +79,14 @@
         <servlet-name>adminOrderManageServlet</servlet-name>
         <servlet-class>adminController.adminOrderManageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addUserServlet</servlet-name>
+        <servlet-class>adminController.addUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editUserServlet</servlet-name>
+        <servlet-class>adminController.editUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addProductServlet</servlet-name>
         <url-pattern>/admin/product/addProduct</url-pattern>
@@ -150,6 +158,14 @@
     <servlet-mapping>
         <servlet-name>adminOrderManageServlet</servlet-name>
         <url-pattern>/admin/manageOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addUserServlet</servlet-name>
+        <url-pattern>/admin/users/addUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editUserServlet</servlet-name>
+        <url-pattern>/admin/users/editUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
